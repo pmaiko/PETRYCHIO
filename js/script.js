@@ -11,6 +11,33 @@ $(document).ready(function(){
         navText:["",""]
     });
 });
+$('.owl-carousel--content').slick({
+    centerMode: true,
+    slidesToShow: 3,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    prevArrow:'<div class="btn-prev"><span><</span></div>',
+    nextArrow:'<div class="btn-next"><span>></span></div>',
+    variableWidth: true,
+    responsive: [
+        {
+            breakpoint: 768,
+            settings: {
+                arrows: false,
+                centerMode: true,
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                arrows: false,
+                centerMode: true,
+                slidesToShow: 1
+            }
+        }
+    ]
+});
 $(document).ready(function(){
     $(".bars_menu").click(function(){
         $(".top-links").slideToggle();
