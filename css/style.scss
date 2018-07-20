@@ -1,4 +1,5 @@
 $wite: #fff;
+$menutext: #212529;
 $font1: 'Raleway', sans-serif;
 $font2: 'Montserrat', sans-serif;
 h2,h3{
@@ -21,55 +22,150 @@ a{
   font-size: 14px;
   color: $wite;
 }
-.nav__battons{
-  ul{
-  display: flex;
-  margin-bottom: 0px;
-  list-style: none;
-  padding-left: 0px;
-    li:first-child{
-    margin: 0 1rem;
 
-  }
-    li{
-      a{
-        padding: 1.2rem 0;
-        display: flex;
-      }
-    }
-}
-
-}
-.nav__logo {
-  width: 64px;
-  height: 56px;
-  background: url(../images/logos.png);
-}
-.nav__links{
-  ul{
-    li{
-      margin: 0 1rem;
-      a{
-        display: flex;
-        padding: 1.2rem 0;
-      }
-    }
-  }
-}
-.brand{
-  display: flex;
+.button-menu{
+  display: none;
   align-items: center;
+  span{
+    width: 27px;
+    height: 3px;
+    background-color: #fff;
+    display: block;
+    position: relative;
+    &:before,&:after{
+      content: "";
+      position: absolute;
+      width: 27px;
+      height: 3px;
+      background-color: #fff;
+      display: block;
+      transition: 0.2s;
+    }
+    &:before{
+      margin-top: -9px;
+    }
+    &:after{
+      margin-top: 9px;
+    }
+  }
+}
+.active-menu{
+  span{
+    height: 0;
+    &:before,&:after{
+      width: 26px;
+    }
+    &:before{
+      transform: rotate(45deg);
+      transform-origin: left;
+
+    }
+    &:after{
+      transform: rotate(-45deg);
+      transform-origin: left;
+    }
+  }
+}
+.top-menu{
+  transition: all 1s;
+  padding: 15px 0;
+  width: 100%;
+  color: $wite;
+  position: fixed;
+  z-index: 99999;
+  .outside{
+    display: flex;
+    justify-content: space-between;
+    .logotype{
+      transition: all 1s;
+      display: flex;
+      align-items: center;
+      .logo{
+        background: url("../images/logos.png");
+        width: 64px;
+        height: 56px;
+      }
+      .slogan{
+        font-family: $font1;
+        a{
+          transition: all 1s;
+          font-size: 26px;
+        }
+      }
+    }
+    .links{
+      display: flex;
+      align-items: center;
+      ul{
+        li{
+          margin: 0 15px;
+        }
+      }
+    }
+    .buttons{
+      display: flex;
+      align-items: center;
+      ul{
+        padding: 0px;
+        li{
+          margin: 0 10px;
+          a{
+            font-size: 20px;
+            background: url("../images/top_icon_sprites.png");
+            width: 24px;
+            height: 24px;
+
+            display: flex;
+          }
+          #a1{
+            background-position: 0 0;
+          }
+          #a2{
+            background-position: 24px 0;
+          }
+        }
+      }
+    }
+
+    ul{
+      display: flex;
+      margin-top: 0;
+      margin-bottom: 0;
+      li{
+        list-style-type: none;
+      }
+    }
+  }
+}
+.scroll{
+  padding: 10px 0;
+  background-color: $wite;
+  border-bottom: solid 1px #f8f8f8;
+  span{
+    background-color: $menutext;
+    &:after,&:before{
+      background-color: $menutext;
+    }
+  }
+  .outside .logotype .logo{
+    transition: all 1s;
+    background: url("../images/logos-black.png");
+    width: 35px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .outside .logotype .slogan a{
+    font-size: 20px;
+  }
   a{
-    font-family: $font1;
-    font-size: 30px;
+    color: $menutext;
   }
-}
-.navigation{
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  display: flex;
-  padding: 1rem 0.5rem;
+  .outside .buttons ul li a{
+    background: url("../images/top_icon_sprites-black.png");
+  }
+ .outside .links{
+  }
 }
 header{
   position: relative;
@@ -81,6 +177,7 @@ header{
   background-position: center 0 ;
   width: 100%;
   height: 100vh;
+  min-height: 600px;
 }
 .header__images2 {
   background: url("../images/header2.jpg");
@@ -88,6 +185,7 @@ header{
   background-position: center 0 ;
   width: 100%;
   height: 100vh;
+  min-height: 600px;
 }
 .header__images3 {
   background: url("../images/header3.jpg");
@@ -95,6 +193,7 @@ header{
   background-position: center 0 ;
   width: 100%;
   height: 100vh;
+  min-height: 600px;
 }
 .header__images-overlay{
   width: 100%;
