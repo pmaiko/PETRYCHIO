@@ -1,19 +1,37 @@
+<?php
+include_once('database.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css" >
-    <link rel="stylesheet" href="libs/FontAwesome/css/fontawesome-all.min.css" >
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" >
     <link rel="stylesheet" href="css/slick.css" >
     <link rel="stylesheet" href="css/animate.css" >
     <link rel="stylesheet" href="css/style.css" >
     <link rel="stylesheet" href="css/media.css" >
+    <link rel="shortcut icon" href="/images/logos-black.png" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway" rel="stylesheet">
     <title>Petrychio</title>
 </head>
 <body>
+<div class="overlay">
+    <div class="loaded">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span class="sr-only">Загрузка...</span>
+    </div>
+</div>
+<div class="my-modal">
+    <div class="modal-img">
+        <div class="closed">
+            <span></span>
+        </div>
+        <img src="" alt="">
+    </div>
+</div>
 <div class="top-menu">
     <div class="container">
         <div class="outside">
@@ -26,7 +44,7 @@
             </div>
             <div class="links">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="login.php">Music</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Portfolio</a></li>
                     <li><a href="#">Features</a></li>
@@ -45,7 +63,7 @@
         </div>
     </div>
 </div>
-<header>
+<header class="header">
     <div class="owl-carousel">
         <div class="header__images1">
             <div class="header__images-overlay"></div>
@@ -58,9 +76,9 @@
         </div>
     </div>
     <div class="header__content">
-        <h2>Unique and Modern Design</h2>
-        <h1>Portfolio PSD Template</h1>
-        <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+        <h2>Kakoy to bespoleznyy tekst</h2>
+        <h1>Petryxa Web & App</h1>
+        <p>Я разрабатываю и кодирую красиво, и мне нравится то, что я делаю. Web-разработчик / HTML-верстальщик / Программист PHP / JavaScript</p>
             <a href="#" class="header__button">Get Started</a>
     </div>
 </header>
@@ -70,32 +88,32 @@
             <div class="col-md-3">
                 <div class="eml1-content">
                     <div class="eml1-images"><img src="images/pansil.png" alt=""></div>
-                    <h3>Web & App Design</h3>
-                    <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                    <h3>Дизайн</h3>
+                    <p>Я ценю простую структуру контента, чистые шаблоны проектирования и продуманные взаимодействия.</p>
                     <div class="eml1-line"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="eml1-content">
                     <div class="eml1-images"><img src="images/place.png" alt=""></div>
-                    <h3>Development</h3>
-                    <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                    <h3>Разработчик</h3>
+                    <p>Я имею тенденцию кодировать вещи с нуля и наслаждаться реализацией <br> идей в браузере.</p>
                     <div class="eml1-line"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="eml1-content">
                     <div class="eml1-images"><img src="images/tools.png" alt=""></div>
-                    <h3>Customization</h3>
-                    <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                    <h3>Наставник</h3>
+                    <p>Я искренне забочусь о людях и люблю помогать новым дизайнерам работать на своем ремесле.</p>
                     <div class="eml1-line"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="eml1-content">
                     <div class="eml1-images"><img src="images/file.png" alt=""></div>
-                    <h3>Marketing</h3>
-                    <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                    <h3>Маркетинг</h3>
+                    <p>Я создаю, продвигаю, предоставляю и втираю какуе то дич <br> покупателям ...</p>
                     <div class="eml1-line"></div>
                 </div>
             </div>
@@ -104,8 +122,8 @@
 </section>
 <section class="eml2">
     <div class="container">
-        <h2>Waxom is Realization of your Ideas.</h2>
-        <p>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
+        <h2>Правильное отображение на всех устройствах</h2>
+        <p>Портфолио автоматически подстраивается для отображения на смартфонах. Для управления внешним видом веб-сайта на мобильных устройствах можно использовать специальные параметры. </p>
         <div class="eml2-image">
             <img src="images/browsers.png" alt="">
         </div>
@@ -129,87 +147,29 @@
         <h2>Our Latest Projects.</h2>
         <p>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
         <div class="eml4-buttons">
-            <a href="#" class="eml4-button active">All</a>
-            <a href="#" class="eml4-button">Web Design</a>
-            <a href="#" class="eml4-button">Mobile App</a>
-            <a href="#" class="eml4-button">Illustration</a>
-            <a href="#" class="eml4-button">Photography</a>
+            <a href="#" class="eml4-button active" id="all_photo">All</a>
+            <a href="#" class="eml4-button" id="cat1">Kiev</a>
+            <a href="#" class="eml4-button" id="cat2">Lviv</a>
+            <a href="#" class="eml4-button" id="cat3">Uman</a>
+            <a href="#" class="eml4-button" id="cat4">Gaivoron</a>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="elm">
-                    <div class="image">
-                        <img src="images/photo1.png" alt="">
-                    </div>
-                    <div class="block">
-                        <div class="arrow"></div>
-                        <h3>Claritas Etiam Processus</h3>
-                        <p>Photography, Nature</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="elm">
-                    <div class="image">
-                        <img src="images/photo2.png" alt="">
-                    </div>
-                    <div class="block">
-                        <div class="arrow"></div>
-                        <h3>Quam Nutamus Farum</h3>
-                        <p>Graphic Design, Mock-Up</p>
+        <div class="row load w-100">
+            <?php foreach ($images as $images): ?>
+                <div class="col-md-4">
+                    <div class="elm" id="<?=$images['id'];?>">
+                        <div class="image">
+                            <img src="<?=$images['src'];?>" alt="">
+                        </div>
+                        <div class="block">
+                            <div class="arrow"></div>
+                            <h3><?=$images['caption'];?></h3>
+                            <p><?=$images['text'];?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="elm">
-                    <div class="image">
-                        <img src="images/photo3.png" alt="">
-                    </div>
-                    <div class="block">
-                        <div class="arrow"></div>
-                        <h3>Usus Legentis Videntur</h3>
-                        <p>Photography, Holiday</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="elm">
-                    <div class="image">
-                        <img src="images/photo4.png" alt="">
-                    </div>
-                    <div class="block">
-                        <div class="arrow"></div>
-                        <h3>Claritas Etiam Processus</h3>
-                        <p>Photography, Nature</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="elm">
-                    <div class="image">
-                        <img src="images/photo5.png" alt="">
-                    </div>
-                    <div class="block">
-                        <div class="arrow"></div>
-                        <h3>Quam Nutamus Farum</h3>
-                        <p>Graphic Design, Mock-Up</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="elm">
-                    <div class="image">
-                        <img src="images/photo6.png" alt="">
-                    </div>
-                    <div class="block">
-                        <div class="arrow"></div>
-                        <h3>Usus Legentis Videntur</h3>
-                        <p>Photography, Holiday</p>
-                    </div>
-                </div>
-            </div>
+            <? endforeach; ?>
         </div>
-        <a href="#" class="button"><span class="cl-hover"></span>Load More</a>
+       <div id="load_more" class="button"><span class="cl-hover"></span>Load More</div>
     </div>
 </section>
 <section class="video">
@@ -528,6 +488,7 @@
     </div>
 </footer>
 <script src="js/jquery-3.3.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/slick.min.js"></script>

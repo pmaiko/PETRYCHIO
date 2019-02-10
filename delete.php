@@ -1,11 +1,11 @@
-<?php 
+<?php
 include_once("database.php");
-define ('SITE_ROOT', realpath(dirname(__FILE__)));
-$id_delete = $_POST['id'];
-$allid = $_POST['allid'];
-$src_delete = $_POST['src'];
-$allsrc = $_POST['allsrc'];
-unlink(SITE_ROOT.$src_delete);
+//define ('SITE_ROOT', realpath(dirname(__FILE__)));
+$id_delete = mysqli_real_escape_string($connect,$_POST['id']);
+$allid = mysqli_real_escape_string($connect,$_POST['allid']);
+$src_delete = mysqli_real_escape_string($connect,$_POST['src']);
+$allsrc = mysqli_real_escape_string($connect,$_POST['allsrc']);
+//unlink(SITE_ROOT.$src_delete);
 $querydelete = "DELETE FROM music WHERE id = '$id_delete'";
 $resultdelete = mysqli_query($connect,$querydelete);
 $id_zapor = $id_delete-1;

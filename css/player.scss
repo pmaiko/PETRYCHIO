@@ -2,6 +2,15 @@
   margin: 0px;
   padding: 0px;
 }
+body{
+  font-family: 'Righteous', cursive;
+  background: url("../images/photo000.jpg") no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+}
 .overlay{
   width: 100%;
   height: 100vh;
@@ -46,7 +55,7 @@
   margin-left: 7px;
 }
 .marpause{
-  margin-left: 4px;
+  //margin-left: 4px;
 }
 .d-none{
   display: none;
@@ -55,6 +64,8 @@
   margin:0 5px 0 5px;
 }
 .pause,.play-pause{
+  justify-content: center;
+  align-items: center;
   font-size: 32px;
   width: 35px;
   height: 35px;
@@ -75,7 +86,8 @@
   width: 650px;
   margin: 0 auto;
   padding: 10px;
-  box-shadow: 4px 4px 10px 0px #584f536b;
+  box-shadow: 4px 4px 10px 0 #584f536b;
+  transition: top,padding,background-color  1s ease;
 
 }
 .top_nav{
@@ -88,6 +100,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  transition: all 1s;
 }
 .settings{
   display: flex;
@@ -124,6 +137,7 @@
   width: 100%;
   height: 35px;
   position: relative;
+  transition: all 1s;
 }
 .range{
   background: #383a4c;
@@ -145,7 +159,7 @@
   color: #fff;
 }
 .time{
-  width: 40px;
+  width: 52px;
   margin-left: 5px;
   margin-right: 90px;
 }
@@ -282,7 +296,9 @@
   background: linear-gradient(to bottom, #ff0202, #4c3933);
   left: 232px;
 }
-
+.ev1,.ev2,.ev3,.ev4,.ev5,.ev6,.ev7,.ev8,.ev9,.ev10,.ev11,.ev12,.ev13,.ev14,.ev15,.ev16,.ev17,.ev18,.ev19,.ev20,.ev21,.ev22,.ev23,.ev24,.ev25,.ev26,.ev27,.ev28,.ev29,.ev30{
+  background: linear-gradient(to bottom, #72e6cf, #72e6cf);
+}
 .evs{
   display: block;
   width: 240px;
@@ -298,11 +314,119 @@
   bottom: 0px;
 }
 .list{
-  width: 500px;
+  width: 650px;
   margin: 10px auto;
-  padding: 10px;
-  background: #c11153;
+  padding: 0 10px 0;
+  background: #5a5e84;
 }
 .click{
   color: #383a4c;
+}
+//input[type='file']{
+//  display: none;
+//}
+#download{
+  font-size: 1rem;
+  background: #72e6cf;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #383a4c;
+}
+#button{
+  font: 400 13.3333px Arial;
+  font-size: 1rem;
+  background: #72e6cf;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #383a4c;
+
+}
+.form{
+  border-bottom: 1px solid #72e6cf;
+  padding: 10px;
+}
+.content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #72e6cf;
+  .post{
+    display: flex;
+    .list-play{
+      margin-right: 10px;
+    }
+  }
+  .controls-song{
+    display: flex;
+    color: #72e6cf;
+    font-size: 1rem;
+    .delete{
+      display: flex;
+      cursor: pointer;
+      padding: 7px;
+    }
+    .download{
+      padding: 5px;
+      color: #72e6cf;
+    }
+  }
+}
+.list{
+  box-shadow: 4px 4px 10px 0px #584f536b;
+  transition: all 1s;
+}
+.scroll{
+  background-color: #202232;
+  position: fixed;
+  left: 50%;
+  top: 10px;
+  transform: translate(-50%);
+  padding: 0 10px 10px;
+  transition: top,padding,background-color  1s ease;
+}
+#add{
+  padding: 5px;
+  background-color: #72e6cf;
+  border: none;
+  outline: none;
+}
+.form-add{
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #e67297;
+  transition: 1s all;
+  z-index: 2;
+  input{
+    border: none;
+    width: 350px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 2px;
+    display: block;
+    margin: 10px 0;
+  }
+  button{
+    padding: 5px;
+    background-color: #72e6cf;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+  }
+}
+.over{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  display: none;
+  z-index: 1;
 }

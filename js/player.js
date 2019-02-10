@@ -1,5 +1,5 @@
   var mute = false;
-    var volume = 20;
+    var volume = 100;
     var vol;
     var Song;
     var handle;
@@ -50,19 +50,19 @@
                     $(".list-play",this).css("color","#72e6cf");
                 }
             });
-            
+
         }
 
     function playSong(src, nameSong){
         var currentTime, current = -100;
-        
+
         $(".player .nameSong").text(nameSong)
         Song = new Audio(src);
         Song.play();
-        linking = src; 
+        linking = src;
         Song.muted = mute;
         setVolume(volume);
-        
+
         Song.addEventListener('timeupdate',function(){
             duration = Song.duration;
             currentTime = Song.currentTime;
@@ -87,9 +87,9 @@
             if (currentTime == duration){
                 clearInterval(handle);
                 next();
-            }   
+            }
         })
-        
+
     }
     function playPause(src, nameSong){
         if (Song){
@@ -150,6 +150,14 @@
             }
     }
     $(document).ready(function(){
+        $('#button').click(function(){
+            $("input[type='file']").trigger('click');
+        })
+
+        $("input[type='file']").change(function(){
+            $('#val').text(this.value.replace(/C:\\fakepath\\/i, ''))
+        })
+
         $(".post").click(function() {
             clearInterval(handle);
            var src = $(this).attr("data-video-src");
@@ -163,8 +171,8 @@
            //interesting
            //$(this).find(".subclass").css("visibility","visible");
            playPause(globalsrc, nameSong);
-           $(".play-pause").hide();
-            $(".pause").show();
+           $(".play-pause").css("display","none");
+            $(".pause").css("display","flex");
            $(".list-play").css("color","white");
             if (src==globalsrc){
                 $(".list-play",this).css("color","#72e6cf");
@@ -175,9 +183,9 @@
         $(".play-pause").click(function() {
             if (!Song){
                 var max=$(".content").attr('id');
-                $(".post").each(function(){  
-                    var idd = $(this).attr('id'); 
-                    var srcc = $(this).attr("data-video-src");  
+                $(".post").each(function(){
+                    var idd = $(this).attr('id');
+                    var srcc = $(this).attr("data-video-src");
                     nameSong = $(this).text();
                     if (idd == max){
                         id_song=idd;
@@ -188,25 +196,24 @@
                             $(".list-play",this).css("color","#72e6cf");
                         }
                     }
-                }); 
-                $(".play-pause").hide();
-                $(".pause").show();
+                });
+                $(".play-pause").css("display","none");
+                $(".pause").css("display","flex");
             }
             else{
-                alert('lox');
                 clearInterval(handle);
                 playPause(globalsrc);
-                $(".play-pause").hide();
-                $(".pause").show();
+                $(".play-pause").css("display","none");
+                $(".pause").css("display","flex");
             }
         });
         $(".pause").click(function() {
             clearInterval(handle);
             playPause(globalsrc, nameSong);
-            $(".play-pause").show();
-            $(".pause").hide();
+            $(".play-pause").css("display","flex");
+            $(".pause").css("display","none");
         });
-        
+
         $(".next").click(function(event) {
             clearInterval(handle);
             next();
@@ -214,13 +221,13 @@
 
         $(".prev").click(function(event) {
             clearInterval(handle);
-            prev();   
+            prev();
         });
         $(".repeat").click(function(event) {
             if (Song){
-               $(this).toggleClass("click"); 
+               $(this).toggleClass("click");
             }
-            
+
         });
         $(".mute").click(function() {
             if(Song){
@@ -289,7 +296,7 @@
             });
         });
 
-    });  
+    });
     function func() {
   //alert( 'Привет' );
 }
@@ -307,7 +314,7 @@ function seccessdata(data){
     }
     });
 
-    
+
     var i=max;
     $(".content").each(function(){
         $(this).attr("id",i=i-1);
@@ -324,15 +331,65 @@ function seccessdata(data){
  $(".overlay").css("display","none");
 }
 
-$(".delete").click(function(event) {
+$(".list-wrap").on('click', '.delete', function (event) {
     var src = $(this).attr("data-video-src");
     var id = $(this).attr('id');
     $.ajax({
         url: "delete.php",
         type: "POST",
-         dataType : "html", 
+         dataType : "html",
         data: ({id: id, src: src}),
         beforeSend: beforeee,
         success: seccessdata
     });
 });
+var playerheight = $(".player").height();
+console.log(playerheight);
+$(window).scroll(function (){
+    var width = $("html,body").scrollTop();
+    if (width>playerheight){
+        $('.player').addClass("scroll");
+        $('.panel').css("display","none");
+        $("body").css("margin-top",playerheight);
+        $(".timetobar").css("height",8);
+        $(".setTime").css("opacity","0");
+
+    }
+    else {
+        $(".player").removeClass("scroll")
+        $('.panel').css("display","flex");
+        $("body").css("margin-top",0);
+        $(".timetobar").css("height",35);
+        $(".setTime").css("opacity","1");
+    }
+    console.log(width)
+});
+
+$("#add").click(function () {
+    $(".form-add").css("display","block");
+    $(".over").css("display","block");
+    $("body").css("overflow","hidden");
+});
+$(".close").click(function () {
+    $(".form-add").css("display","none");
+    $(".over").css("display","none");
+    $("body").css("overflow","inherit");
+});
+function update(){
+    $(".list-wrap").load("music.php .list");
+    $(".overlay").css("display","none");
+    $(".form-add").css("display","none");
+    $(".over").css("display","none");
+}
+//$(".addMusic").click(function () {
+   // var name = $("input[name='name']").val();
+    //var link = $("input[name='link']").val();
+   // $.ajax({
+     //   url: "add.php",
+       // type: "GET",
+       // dataType : "html",
+        //data: ({name: name, link: link}),
+        //beforeSend: beforeee,
+        //success: update,
+    //})
+//});

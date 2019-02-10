@@ -85,6 +85,147 @@ $(window).on('scroll',function(){
         $(".top-menu").addClass('scroll')
     }
 })
+function readysex(data){
+    $(".load").html(data);
+    $(".overlay").css("display","none");
+}
+function before(){
+    $(".overlay").css("display","block");
+}
+$('#load_more').click(function () {
+    var id;
+    var cat;
+    $('.elm').each(function () {
+         id = $(this).attr('id');
+    });
+    $('.eml4-button').each(function () {
+        cat = $(this).attr('id');
+        if ($(this).hasClass('active')){
+            $.ajax({
+                url:"post_images.php",
+                type: "post",
+                dataType: "html",
+                data: ({limit:id, cat:cat}),
+                beforeSend: before,
+                success: readysex
+            });
+        }
+    });
+});
+$("#all_photo").click(function () {
+    event.preventDefault();
+    $(this).addClass('active');
+    $('#cat1').removeClass('active');
+    $("#cat2").removeClass('active');
+    $("#cat3").removeClass('active');
+    $("#cat4").removeClass('active');
+    $.ajax({
+        url:"post_images.php",
+        type: "post",
+        dataType: "html",
+        data: ({limit:0}),
+        beforeSend: before,
+        success: readysex
+    });
+});
+$("#cat1").click(function () {
+    event.preventDefault();
+    $(this).addClass('active');
+    $("#all_photo").removeClass('active');
+    $("#cat2").removeClass('active');
+    $("#cat3").removeClass('active');
+    $("#cat4").removeClass('active');
+    $.ajax({
+        url:"post_images.php",
+        type: "post",
+        dataType: "html",
+        data: ({limit:0,cat:'cat1'}),
+        beforeSend: before,
+        success: readysex
+    });
+});
+$("#cat2").click(function () {
+    event.preventDefault();
+    $(this).addClass('active');
+    $("#all_photo").removeClass('active');
+    $("#cat1").removeClass('active');
+    $("#cat3").removeClass('active');
+    $("#cat4").removeClass('active');
+    $.ajax({
+        url:"post_images.php",
+        type: "post",
+        dataType: "html",
+        data: ({limit:0,cat:'cat2'}),
+        beforeSend: before,
+        success: readysex
+    });
+});
+$("#cat3").click(function () {
+    event.preventDefault();
+    $(this).addClass('active');
+    $("#all_photo").removeClass('active');
+    $("#cat1").removeClass('active');
+    $("#cat2").removeClass('active');
+    $("#cat4").removeClass('active');
+    $.ajax({
+        url:"post_images.php",
+        type: "post",
+        dataType: "html",
+        data: ({limit:0,cat:'cat3'}),
+        beforeSend: before,
+        success: readysex
+    });
+});
+$("#cat4").click(function () {
+    event.preventDefault();
+    $(this).addClass('active');
+    $("#all_photo").removeClass('active');
+    $("#cat1").removeClass('active');
+    $("#cat2").removeClass('active');
+    $("#cat3").removeClass('active');
+    $.ajax({
+        url:"post_images.php",
+        type: "post",
+        dataType: "html",
+        data: ({limit:0,cat:'cat4'}),
+        beforeSend: before,
+        success: readysex
+    });
+});
+var X;
+var Y;
+$(window).mousemove(function(e){
+    X = e.pageX;
+    Y = e.pageY - $(window).scrollTop();
+    console.log("X: " + X + " Y: " + Y);
+});
+$('.load').on('click', '.elm', function (event) {
+    var src = $('img',this).attr('src');
+    $('.my-modal img').attr('src',src);
+    $('.my-modal').css('left', X+'px');
+    $('.my-modal').css('top', Y+'px');
+    $('.my-modal').css('display','flex');
+    $('body').css('overflow','hidden');
+    $('.modal-img').delay(1500).fadeIn();
+    $('.my-modal').addClass('transition_over');
+    $('.my-modal').removeClass('transition_overback');
+});
+$('.closed').click(function () {
+    //$('.my-modal').css('display','none');
+    $('body').css('overflow','auto');
+   // $('.modal-img').fadeOut();
+    $('.my-modal').removeClass('transition_over');
+    $('.my-modal').addClass('transition_overback');
 
+});
 
+$(window).scroll(function () {
+    var num  = $(this).scrollTop();
+    console.log($(window).height()  );
+    if(num < $(window).height() && $(window).height() >= 600){
+        $('.header').css({
+            "transform" : "translateY("+num+"px"+")"
+        });
+    }
+});
 

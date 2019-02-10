@@ -82,8 +82,11 @@ a{
       align-items: center;
       .logo{
         background: url("../images/logos.png");
-        width: 64px;
+        width: 56px;
         height: 56px;
+        background-size: contain;
+        background-position: center center;
+        margin: 0 5px 0 0;
       }
       .slogan{
         font-family: $font1;
@@ -151,9 +154,9 @@ a{
     transition: all 1s;
     background: url("../images/logos-black.png");
     width: 35px;
-    height: 30px;
+    height: 35px;
     background-size: contain;
-    background-repeat: no-repeat;
+    background-position: center center;
   }
   .outside .logotype .slogan a{
     font-size: 20px;
@@ -174,7 +177,7 @@ header{
 .header__images1 {
   background: url("../images/header1.jpg");
   background-size: cover;
-  background-position: center 0 ;
+  background-position: center center ;
   width: 100%;
   height: 100vh;
   min-height: 600px;
@@ -182,7 +185,7 @@ header{
 .header__images2 {
   background: url("../images/header2.jpg");
   background-size: cover;
-  background-position: center 0 ;
+  background-position: center center ;
   width: 100%;
   height: 100vh;
   min-height: 600px;
@@ -190,7 +193,7 @@ header{
 .header__images3 {
   background: url("../images/header3.jpg");
   background-size: cover;
-  background-position: center 0 ;
+  background-position: center center ;
   width: 100%;
   height: 100vh;
   min-height: 600px;
@@ -308,6 +311,7 @@ section{
 }
 .eml1{
   padding: 5rem 0;
+  background: $wite;
   .eml1-content{
     display: flex;
     flex-direction: column;
@@ -395,15 +399,17 @@ section{
   font-family: $font1;
   font-weight: bold;
   transition: all 0.7s ease;
+  cursor: pointer;
   &:hover{
     background: #ff7c00;
     border-radius: 2px;
   }
-
 }
 .eml4{
+  background: $wite;
   .button{
     margin-top: 40px;
+    color: white;
   }
   padding: 5rem 0;
   p{
@@ -436,7 +442,7 @@ section{
   .image{
     position: relative;
     overflow: hidden;
-    height: 240px;
+    height: 300px;
     img {
       display: block;
       margin: 0 auto;
@@ -453,9 +459,10 @@ section{
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    height: 90px;
+    height: 120px;
     background-color: #fbfaf8;
     padding: 0 0 0 30px;
+
     .arrow{
       transition: all 0.5s;
       position: absolute;
@@ -470,6 +477,7 @@ section{
   }
   .elm{
     margin: 25px 0 0 0;
+    cursor: pointer;
     &:hover .arrow{
       background: url("../images/arrow_eml4_black.png"); ;
     }
@@ -940,6 +948,7 @@ section{
 }
 .footer{
   padding: 45px 0;
+  position: relative;
   width: 100%;
   background-color: #111111;
   .content{
@@ -961,6 +970,176 @@ section{
         }
       }
     }
+  }
+}
+.login_wrap{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50% , -50%);
+  background: #d1ecf1;
+  padding: 20px;
+  form{
+    font-family: Consolas;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    input{
+      width: 350px;
+      height: 25px;
+      border: #7f4748 2px solid;
+      border-radius: 5px;
+      margin: 0.5rem 0;
+      padding: 2px 5px;
+    }
+    label{
+      font-size: 16px;
+    }
+    button{
+      border: none;
+      background-color: #854f50;
+      padding: 7px 25px;
+      color: white;
+      text-transform: uppercase;
+    }
+  }
+  .login_buttons{
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+  }
+}
+.login_logo{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  h2{
+    color: #49b29f;
+    font-family: monospace;
+  }
+  span{
+    color: #c70808;
+    font-family: 'Shadows Into Light', cursive;
+  }
+}
+.body{
+  background: url(../images/photo000.jpg) no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  height: 100%;
+}
+.overlay{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: #19191936;
+  display: none;
+  z-index: 999999;
+}
+.loaded{
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+.transition_over{
+  animation: over 2s cubic-bezier(0, 1.49, 1, -0.57);
+  animation-fill-mode: forwards;
+}
+.transition_overback{
+  animation: overback 1.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+
+
+.my-modal{
+  position: fixed;
+  z-index: 999999;
+  overflow: hidden;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  .modal-img{
+    position: relative;
+    height: 100vh;
+    border: solid 20px transparent;
+    .closed{
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      top: 0;
+      right: 0;
+      background-color: white;
+      span{
+        height: 20px;
+        width: 16px;
+        display: block;
+        &:before{
+          content: "";
+          position: absolute;
+          width: 25px;
+          height: 2px;
+          background-color: black;
+          transform: rotate(48deg);
+          transform-origin: left;
+        }
+        &:after{
+          content: "";
+          position: absolute;
+          width: 25px;
+          height: 2px;
+          top: 27.6px;
+          background-color: black;
+          transform: rotate(-48deg);
+          transform-origin: left;
+        }
+      }
+    }
+    img{
+      height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+  }
+}
+@keyframes over {
+  from {
+    background: #362f2d;
+    width: 0;
+    height: 0;
+
+  }
+  50%{
+  }
+  to {
+    transform: rotate(0deg);
+    background: #362f2d;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+  }
+}
+@keyframes overback {
+  from {
+    top: 0;
+    left: 0;
+    background: #362f2d;
+    width: 100%;
+    height: 100vh;
+  }
+  to {
+    background: #362f2d;
+    width: 0;
+    height: 0;
+
   }
 }
 
