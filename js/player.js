@@ -158,7 +158,7 @@
             $('#val').text(this.value.replace(/C:\\fakepath\\/i, ''))
         })
 
-        $(".post").click(function() {
+        $(".list").on('click', '.post', function() {
             clearInterval(handle);
            var src = $(this).attr("data-video-src");
            var id = $(this).attr('id');
@@ -335,7 +335,7 @@ $(".list-wrap").on('click', '.delete', function (event) {
     var src = $(this).attr("data-video-src");
     var id = $(this).attr('id');
     $.ajax({
-        url: "delete.php",
+        url: "app/delete.php",
         type: "POST",
          dataType : "html",
         data: ({id: id, src: src}),
@@ -385,7 +385,7 @@ function update(){
    // var name = $("input[name='name']").val();
     //var link = $("input[name='link']").val();
    // $.ajax({
-     //   url: "add.php",
+     //   url: "app/add.php",
        // type: "GET",
        // dataType : "html",
         //data: ({name: name, link: link}),

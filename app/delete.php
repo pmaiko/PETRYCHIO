@@ -1,5 +1,5 @@
 <?php
-include_once("database.php");
+include_once("app/database.php");
 //define ('SITE_ROOT', realpath(dirname(__FILE__)));
 $id_delete = mysqli_real_escape_string($connect,$_POST['id']);
 $allid = mysqli_real_escape_string($connect,$_POST['allid']);

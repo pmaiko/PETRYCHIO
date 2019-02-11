@@ -13,14 +13,11 @@ $server = "localhost";
 $connect = mysqli_connect($server, $user, $password);
 
 if ($connect) {
-    //mysqli_query($connect, "DROP DATABASE $database");
-    mysqli_query($connect, "CREATE DATABASE $database");
+    //SHOW DATABASES LIKE 'dbname';
+//    mysqli_query($connect, "DROP DATABASE $database");
+//    mysqli_query($connect, "CREATE DATABASE $database");
     $connect = mysqli_connect($server, $user, $password, $database);
-    include_once ('createTables.php');
-    $music = mysqli_query($connect,"SELECT * FROM music ORDER BY id DESC");
-    if ($music) {
-        $num = mysqli_fetch_all($music, MYSQLI_ASSOC);
-    }
+//    include_once ('app/create_tables.php');
 //$login = $_POST['login'];
     $limit = $_POST['limit'];
     $cat = mysqli_real_escape_string($connect,$_POST['cat']);
@@ -46,4 +43,21 @@ if ($connect) {
         }
     }
 //    }
+
+    function select_users_info($connect){
+        $userLogin = $_COOKIE['login'];
+        $query = mysqli_query($connect,"SELECT * FROM users WHERE Login = '$userLogin'");
+        if ($query) {
+            return $infoUsers = mysqli_fetch_all($query, MYSQLI_ASSOC);
+        }
+    }
+
+    function select_playlist($connect){
+        $playlist = $_COOKIE['login'];
+        $music = mysqli_query($connect,"SELECT * FROM playlist_$playlist ORDER BY id DESC");
+        if ($music) {
+            return $num = mysqli_fetch_all($music, MYSQLI_ASSOC);
+        }
+    }
 }
+?>

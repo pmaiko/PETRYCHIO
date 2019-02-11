@@ -1,12 +1,12 @@
 <?php
-include_once("database.php");
+include_once("app/database.php");
     $login = mysqli_real_escape_string($connect,$_POST['login']);
     $pass = mysqli_real_escape_string($connect,$_POST['pass']);
     $inusers = "SELECT * from users";
     $outinbase = mysqli_query($connect, $inusers);
     $users = mysqli_fetch_all($outinbase, MYSQLI_ASSOC);
     foreach ($users as $users){
-        if ($login == $users['login'] && $pass == $users['password']) {
+        if ($login == $users['Login'] && $pass == $users['Password']) {
             header('location:/music.php');
             setcookie('login',$login);
             setcookie('pass',$pass);
@@ -36,6 +36,7 @@ if (!$_COOKIE['login'] && !$_COOKIE['pass']){?>
         <div class="login_buttons">
             <button type="submit" name="sub">Login</button>
         </div>
+        <a href="registration.php">REG</a>
     </form>
 </div>
 <div class="login_logo">

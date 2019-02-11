@@ -1,5 +1,5 @@
 <?
-include_once("database.php");
+include_once("app/database.php");
 ?>
 <? foreach ($num as $num){?>
 	<div class="content" id="<?=$num['id'] ?>">
@@ -9,7 +9,7 @@ include_once("database.php");
 			$masiv = array ('/music/','.mp3');
 			$f = str_replace($masiv, '', $num['Song']);
 			echo $f;
-			?> 
+			?>
 		</div>
 		<div id="<?=$num['id'] ?>" data-video-src="<?=$num['Song'] ?>" class="delete">delete</div>
 	</div>

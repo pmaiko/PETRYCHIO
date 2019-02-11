@@ -102,7 +102,7 @@ $('#load_more').click(function () {
         cat = $(this).attr('id');
         if ($(this).hasClass('active')){
             $.ajax({
-                url:"post_images.php",
+                url:"app/post_images.php",
                 type: "post",
                 dataType: "html",
                 data: ({limit:id, cat:cat}),
@@ -120,7 +120,7 @@ $("#all_photo").click(function () {
     $("#cat3").removeClass('active');
     $("#cat4").removeClass('active');
     $.ajax({
-        url:"post_images.php",
+        url:"app/post_images.php",
         type: "post",
         dataType: "html",
         data: ({limit:0}),
@@ -136,7 +136,7 @@ $("#cat1").click(function () {
     $("#cat3").removeClass('active');
     $("#cat4").removeClass('active');
     $.ajax({
-        url:"post_images.php",
+        url:"app/post_images.php",
         type: "post",
         dataType: "html",
         data: ({limit:0,cat:'cat1'}),
@@ -152,7 +152,7 @@ $("#cat2").click(function () {
     $("#cat3").removeClass('active');
     $("#cat4").removeClass('active');
     $.ajax({
-        url:"post_images.php",
+        url:"app/post_images.php",
         type: "post",
         dataType: "html",
         data: ({limit:0,cat:'cat2'}),
@@ -168,7 +168,7 @@ $("#cat3").click(function () {
     $("#cat2").removeClass('active');
     $("#cat4").removeClass('active');
     $.ajax({
-        url:"post_images.php",
+        url:"app/post_images.php",
         type: "post",
         dataType: "html",
         data: ({limit:0,cat:'cat3'}),
@@ -184,7 +184,7 @@ $("#cat4").click(function () {
     $("#cat2").removeClass('active');
     $("#cat3").removeClass('active');
     $.ajax({
-        url:"post_images.php",
+        url:"app/post_images.php",
         type: "post",
         dataType: "html",
         data: ({limit:0,cat:'cat4'}),

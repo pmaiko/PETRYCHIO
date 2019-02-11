@@ -1,5 +1,5 @@
 <?php
-include_once ("database.php");
+include_once("app/database.php");
 sleep(1);
 ?>
 <?php foreach ($images as $images): ?>

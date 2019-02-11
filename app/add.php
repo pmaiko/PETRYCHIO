@@ -1,5 +1,5 @@
 <?php
-include_once ("database.php");
+include_once("app/database.php");
 $link = $_GET['link'];
 $name = $_GET['name'];
 $zapros = "INSERT INTO music (Song,Name) VALUES ('$link','$name')";
