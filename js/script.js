@@ -201,19 +201,19 @@ $(window).mousemove(function(e){
 });
 $('.load').on('click', '.elm', function (event) {
     var src = $('img',this).attr('src');
-    $('.my-modal img').attr('src',src);
+    $('.my-modal images').attr('src',src);
     $('.my-modal').css('left', X+'px');
     $('.my-modal').css('top', Y+'px');
     $('.my-modal').css('display','flex');
     $('body').css('overflow','hidden');
-    $('.modal-img').delay(1500).fadeIn();
+    $('.modal-images').delay(1500).fadeIn();
     $('.my-modal').addClass('transition_over');
     $('.my-modal').removeClass('transition_overback');
 });
 $('.closed').click(function () {
     //$('.my-modal').css('display','none');
     $('body').css('overflow','auto');
-   // $('.modal-img').fadeOut();
+   // $('.modal-images').fadeOut();
     $('.my-modal').removeClass('transition_over');
     $('.my-modal').addClass('transition_overback');
 

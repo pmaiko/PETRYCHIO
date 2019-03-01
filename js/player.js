@@ -1,15 +1,16 @@
-  var mute = false;
-    var volume = 100;
-    var vol;
-    var Song;
-    var handle;
-    var id_song
-    var duration;
-    var nameSong;
-    var time;
-    var linking;
-    var globalsrc;
-    var max_songs;
+
+var mute = false,
+    volume = 100,
+    vol,
+    Song,
+    handle,
+    id_song,
+    duration,
+    nameSong,
+    time,
+    linking,
+    globalsrc,
+    max_songs;
     function setVolume(volume) {
          console.log(volume);
          Song.volume = volume/100;
@@ -18,7 +19,11 @@
                return Math.random() * (max - min) + min;
           }
        function next(){
-            max_songs = $(".post").attr('id');
+        max_songs = 0;
+        $(".post").each(function () {
+            max_songs++;
+        });
+            //max_songs = $(".post").attr('id');
             id_song--;
             if (id_song < 1){
                 id_song=max_songs;
@@ -35,14 +40,18 @@
             });
         }
         function prev(){
-            max_songs = $(".content").attr('id');
+            max_songs = 0;
+            $(".post").each(function () {
+                max_songs++;
+            });
+            //max_songs = $(".content").attr('id');
             id_song++;
             if (id_song > max_songs){
                 id_song=max_songs;
             }
             $(".post").each(function() {
                 var z = $(this).attr("id");
-                if (id_song == z){
+                if (id_song === z){
                     globalsrc = $(this).attr("data-video-src");
                     nameSong = $(this).text();
                     playPause(globalsrc,nameSong);
@@ -56,9 +65,56 @@
     function playSong(src, nameSong){
         var currentTime, current = -100;
 
-        $(".player .nameSong").text(nameSong)
-        Song = new Audio(src);
+        $(".player .nameSong").text(nameSong);
+        Song = new Audio();
+        Song.src = src;
+        //Song.load();
         Song.play();
+        //Song.playbackRate = 2;
+        var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        var analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.minDecibels = -70;
+        analyser.maxDecibels = -10;
+        analyser.smoothingTimeConstant = 0;
+        var source = audioCtx.createMediaElementSource(Song);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+
+
+        var array = new Uint8Array(analyser.frequencyBinCount);
+
+        for (var i=0; i<array.length; i++){
+            var block = document.querySelector('.visualizer');
+            var newBlock = document.createElement('div');
+            newBlock.classList.add('visualizer__item');
+            block.appendChild(newBlock);
+        }
+        var arrayClassEv = document.querySelectorAll('.visualizer__item');
+        for (i=0; i < array.length; i++) {
+
+        }
+        console.log(analyser);
+        var visualizerMinValue = 2;
+        Song.ontimeupdate = function () {
+            var j=0
+            analyser.getByteFrequencyData(array);
+            // console.log(array);
+
+            for (i=0; i < array.length; i++) {
+                if (array[i] < visualizerMinValue) {
+                    arrayClassEv[i].style.cssText = 'height:'+visualizerMinValue+'px';
+                }
+                else {
+                    arrayClassEv[i].style.cssText = 'height:'+array[i]+'px';
+                    // console.log(array[i]);
+                    j++;
+                }
+            }
+
+        };
+
+        // alert(Song.ended);
         linking = src;
         Song.muted = mute;
         setVolume(volume);
@@ -88,7 +144,17 @@
                 clearInterval(handle);
                 next();
             }
-        })
+        });
+
+        // Song.addEventListener('progress', function () {
+        //     $(".loadSongPr").css({"left":"-100%"});
+        //     var loadSongPr = Song.buffered.end(0);
+        //     loadSongPr =-((duration-loadSongPr)*100)/duration;
+        //     $(".loadSongPr").css({"left":loadSongPr+"%"});
+        // });
+        Song.addEventListener('volumechange',function () {
+            console.log('lox');
+        });
 
     }
     function playPause(src, nameSong){
@@ -111,39 +177,39 @@
         }
 
         if(!Song.paused){
-                handle = setInterval(function() {
-                    $(".ev1").css("height", getRandom(120, 3));
-                    $(".ev2").css("height", getRandom(120, 3));
-                    $(".ev3").css("height", getRandom(120, 3));
-                    $(".ev4").css("height", getRandom(120, 3));
-                    $(".ev5").css("height", getRandom(120, 3));
-                    $(".ev6").css("height", getRandom(120, 3));
-                    $(".ev7").css("height", getRandom(120, 3));
-                    $(".ev8").css("height", getRandom(120, 3));
-                    $(".ev9").css("height", getRandom(120, 3));
-                    $(".ev10").css("height", getRandom(120, 3));
-                    $(".ev11").css("height", getRandom(120, 3));
-                    $(".ev12").css("height", getRandom(120, 3));
-                    $(".ev13").css("height", getRandom(120, 3));
-                    $(".ev14").css("height", getRandom(120, 3));
-                    $(".ev15").css("height", getRandom(120, 3));
-                    $(".ev16").css("height", getRandom(120, 3));
-                    $(".ev17").css("height", getRandom(120, 3));
-                    $(".ev18").css("height", getRandom(120, 3));
-                    $(".ev19").css("height", getRandom(120, 3));
-                    $(".ev20").css("height", getRandom(120, 3));
-                    $(".ev21").css("height", getRandom(120, 3));
-                    $(".ev22").css("height", getRandom(120, 3));
-                    $(".ev23").css("height", getRandom(120, 3));
-                    $(".ev24").css("height", getRandom(120, 3));
-                    $(".ev25").css("height", getRandom(120, 3));
-                    $(".ev26").css("height", getRandom(120, 3));
-                    $(".ev27").css("height", getRandom(120, 3));
-                    $(".ev28").css("height", getRandom(120, 3));
-                    $(".ev29").css("height", getRandom(120, 3));
-                    $(".ev30").css("height", getRandom(120, 3));
-
-                }, 70);
+                // handle = setInterval(function() {
+                //     $(".ev1").css("height", getRandom(120, 3));
+                //     $(".ev2").css("height", getRandom(120, 3));
+                //     $(".ev3").css("height", getRandom(120, 3));
+                //     $(".ev4").css("height", getRandom(120, 3));
+                //     $(".ev5").css("height", getRandom(120, 3));
+                //     $(".ev6").css("height", getRandom(120, 3));
+                //     $(".ev7").css("height", getRandom(120, 3));
+                //     $(".ev8").css("height", getRandom(120, 3));
+                //     $(".ev9").css("height", getRandom(120, 3));
+                //     $(".ev10").css("height", getRandom(120, 3));
+                //     $(".ev11").css("height", getRandom(120, 3));
+                //     $(".ev12").css("height", getRandom(120, 3));
+                //     $(".ev13").css("height", getRandom(120, 3));
+                //     $(".ev14").css("height", getRandom(120, 3));
+                //     $(".ev15").css("height", getRandom(120, 3));
+                //     $(".ev16").css("height", getRandom(120, 3));
+                //     $(".ev17").css("height", getRandom(120, 3));
+                //     $(".ev18").css("height", getRandom(120, 3));
+                //     $(".ev19").css("height", getRandom(120, 3));
+                //     $(".ev20").css("height", getRandom(120, 3));
+                //     $(".ev21").css("height", getRandom(120, 3));
+                //     $(".ev22").css("height", getRandom(120, 3));
+                //     $(".ev23").css("height", getRandom(120, 3));
+                //     $(".ev24").css("height", getRandom(120, 3));
+                //     $(".ev25").css("height", getRandom(120, 3));
+                //     $(".ev26").css("height", getRandom(120, 3));
+                //     $(".ev27").css("height", getRandom(120, 3));
+                //     $(".ev28").css("height", getRandom(120, 3));
+                //     $(".ev29").css("height", getRandom(120, 3));
+                //     $(".ev30").css("height", getRandom(120, 3));
+                //
+                // }, 70);
             }
             else{
                 clearInterval(handle);
@@ -305,6 +371,9 @@ setTimeout(func, 1000);
 function beforeee(){
     $(".overlay").css("display","block");
 }
+function appdate(data){
+  $(".list").html(data);
+}
 function seccessdata(data){
     var max=$(".content").attr('id');
     $(".content").each(function(){
@@ -333,14 +402,14 @@ function seccessdata(data){
 
 $(".list-wrap").on('click', '.delete', function (event) {
     var src = $(this).attr("data-video-src");
-    var id = $(this).attr('id');
+    var id_song = $(this).attr('id_song');
     $.ajax({
-        url: "app/delete.php",
+        url: "delete.php",
         type: "POST",
          dataType : "html",
-        data: ({id: id, src: src}),
+        data: ({id: id_song, src: src}),
         beforeSend: beforeee,
-        success: seccessdata
+        success: appdate
     });
 });
 var playerheight = $(".player").height();

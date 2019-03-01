@@ -1,3 +1,5 @@
+@import "player";
+
 $wite: #fff;
 $menutext: #212529;
 $font1: 'Raleway', sans-serif;
@@ -81,7 +83,7 @@ a{
       display: flex;
       align-items: center;
       .logo{
-        background: url("../images/logos.png");
+        background: url("../assets/images/logos.png");
         width: 56px;
         height: 56px;
         background-size: contain;
@@ -114,7 +116,7 @@ a{
           margin: 0 10px;
           a{
             font-size: 20px;
-            background: url("../images/top_icon_sprites.png");
+            background: url("../assets/images/top_icon_sprites.png");
             width: 24px;
             height: 24px;
 
@@ -152,7 +154,7 @@ a{
   }
   .outside .logotype .logo{
     transition: all 1s;
-    background: url("../images/logos-black.png");
+    background: url("../assets/images/logos-black.png");
     width: 35px;
     height: 35px;
     background-size: contain;
@@ -165,9 +167,9 @@ a{
     color: $menutext;
   }
   .outside .buttons ul li a{
-    background: url("../images/top_icon_sprites-black.png");
+    background: url("../assets/images/top_icon_sprites-black.png");
   }
- .outside .links{
+  .outside .links{
   }
 }
 header{
@@ -175,7 +177,7 @@ header{
   background: rgba(0,0,0,0.5);
 }
 .header__images1 {
-  background: url("../images/header1.jpg");
+  background: url("../assets/images/header1.jpg");
   background-size: cover;
   background-position: center center ;
   width: 100%;
@@ -183,7 +185,7 @@ header{
   min-height: 600px;
 }
 .header__images2 {
-  background: url("../images/header2.jpg");
+  background: url("../assets/images/header2.jpg");
   background-size: cover;
   background-position: center center ;
   width: 100%;
@@ -191,7 +193,7 @@ header{
   min-height: 600px;
 }
 .header__images3 {
-  background: url("../images/header3.jpg");
+  background: url("../assets/images/header3.jpg");
   background-size: cover;
   background-position: center center ;
   width: 100%;
@@ -205,21 +207,23 @@ header{
 }
 .owl-prev{
   position: absolute;
-  background: url("../images/left.png");
+  background: url("../assets/images/left.png") !important;
   width: 40px;
   left: 1rem;
   top: 50%;
   transform: translate(0, -50%);
   height: 73px;
+  color: transparent !important;
 }
 .owl-next{
-  background: url("../images/right.png");
+  background: url("../assets/images/right.png") !important;
   width: 40px;
   height: 73px;
   right: 1rem;
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+  color: transparent !important;
 }
 .owl-dots{
   position: absolute;
@@ -285,7 +289,7 @@ header{
   }
 }
 .header__button{
-  background: url("../images/button.png");
+  background: url("../assets/images/button.png");
   background-color: #8f7e6e;
   width: 170px;
   border-radius: 3px;
@@ -369,7 +373,7 @@ section{
 }
 .eml3{
   padding: 1.5rem 0;
-  background: url("../images/Background.png");
+  background: url("../assets/images/Background.png");
   background-size: cover;
   h3{
     padding: 0.8rem 0 0;
@@ -388,7 +392,7 @@ section{
   }
 }
 .button{
-  background: url("../images/button.png");
+  background: url("../assets/images/button.png");
   background-color: #8f7e6e;
   width: 170px;
   height: 53px;
@@ -466,7 +470,7 @@ section{
     .arrow{
       transition: all 0.5s;
       position: absolute;
-      background: url("../images/arrow_eml4_white.png");
+      background: url("../assets/images/arrow_eml4_white.png");
       width: 30px;
       height: 10px;
       left: 20px;
@@ -479,7 +483,7 @@ section{
     margin: 25px 0 0 0;
     cursor: pointer;
     &:hover .arrow{
-      background: url("../images/arrow_eml4_black.png"); ;
+      background: url("../assets/images/arrow_eml4_black.png"); ;
     }
     &:hover .block{
       background: #362f2d;
@@ -499,7 +503,7 @@ section{
 }
 .video{
   position: relative;
-  background: url(../images/video.jpg);
+  background: url(../assets/images/video.jpg);
   background-size: cover;
   background-attachment: fixed;
   height: 700px;
@@ -535,7 +539,7 @@ section{
       justify-content: center;
       border-radius: 100%;
       .play{
-        background: url("../images/icon-play.png");
+        background: url("../assets/images/icon-play.png");
         width: 70px;
         height: 70px;
       }
@@ -548,7 +552,7 @@ section{
   background-color: #fbfaf8;
   width: 100%;
   .images-content{
-    background: url("../images/iPhone-in-hand.png");
+    background: url("../assets/images/iPhone-in-hand.png");
     width: 425px;
     height: 616px;
     background-position: center center;
@@ -621,21 +625,21 @@ section{
     width: 44px;
     height: 44px;
     &-people{
-      background: url("../images/people.png");
+      background: url("../assets/images/people.png");
     }
     &-cups{
       width: 48px;
-      background: url("../images/caps.png");
+      background: url("../assets/images/caps.png");
     }
     &-comment{
-      background: url("../images/comment.png");
+      background: url("../assets/images/comment.png");
     }
     &-likes{
-      background: url("../images/likes.png");
+      background: url("../assets/images/likes.png");
     }
     &-laun{
       width: 54px;
-      background: url("../images/laun.png");
+      background: url("../assets/images/laun.png");
     }
   }
   .numbers{
@@ -666,6 +670,7 @@ section{
   width: 100%;
   padding:60px 0 120px;
   .content{
+    padding: 15px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -709,37 +714,37 @@ section{
       height: 250px;
       position: relative;
       &-img1{
-        background: url("../images/photo.png");
+        background: url("../assets/images/photo.png");
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
       }
       &-img2{
-        background: url("../images/photo0.png");
+        background: url("../assets/images/photo0.png");
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
       }
       &-img3{
-        background: url("../images/photo00.png");
+        background: url("../assets/images/photo00.png");
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
       }
       &-img4{
-        background: url("../images/photo000.jpg");
+        background: url("../assets/images/photo000.jpg");
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
       }
       &-img5{
-        background: url("../images/photo0000.jpg");
+        background: url("../assets/images/photo0000.jpg");
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
       }
       &-img6{
-        background: url("../images/photo00000.jpg");
+        background: url("../assets/images/photo00000.jpg");
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
@@ -848,7 +853,7 @@ section{
   }
 }
 .eml8{
-  background-image: url("../images/fon_logotypes.jpg");
+  background-image: url("../assets/images/fon_logotypes.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -876,7 +881,7 @@ section{
       justify-content: flex-start;
       margin-bottom: 20px;
       .image_logo{
-        background-image: url("../images/logos.png");
+        background-image: url("../assets/images/logos.png");
         width: 64px;
         height: 56px;
       }
@@ -1026,7 +1031,7 @@ section{
   }
 }
 .body{
-  background: url(../images/photo000.jpg) no-repeat;
+  background: url(../assets/images/photo000.jpg) no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
@@ -1149,7 +1154,7 @@ section{
 .registration__page {
   font-family: 'Open Sans', sans-serif;
   //font-family: 'Righteous', cursive;
-  background: url("../images/photo000.jpg") no-repeat;
+  background: url("../assets/images/photo000.jpg") no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
@@ -1249,6 +1254,24 @@ section{
   }
 }
 
+.isError {
+  border-bottom: 1px solid #ff3048 !important;
+}
+.isOk {
+  border-bottom: 1px solid #24c482 !important;
+}
+.slide-fade-enter-active {
+  transition: all .2s ease;
+}
+.slide-fade-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  opacity: 0;
+}
 
+
+
+@import "media";
 
 

@@ -1,0 +1,287 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+  .eml6 .text{
+    font-size: 12px;
+  }
+  .eml6 .numbers{
+    font-size: 36px;
+  }
+  .eml5 .images-content{
+    height: 538px;
+  }
+  .eml5 .list li{
+    font-size: 14px;
+  }
+  .top-menu .outside .links ul li{
+    margin: 0px 10px;
+  }
+  .header__content h1{
+    font-size: 2.9rem;
+  }
+  .eml1 .eml1-content h3{
+    font-size: 24px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+  .eml9 .content .logo .image_logo{
+    width: 35px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .eml9 .content .logo{
+    align-items: center;
+  }
+  .eml9 .content h3{
+    font-size: 18px;
+  }
+  .eml9 .content .logo .logo-text{
+    font-size: 22px;
+  }
+  .eml9 .content .text p{
+    font-size: 12px;
+  }
+  .eml9 .content .post{
+    font-size: 12px;
+  }
+  .eml9 .content .post a{
+    font-size: 12px;
+  }
+  .eml6 .text{
+    font-size: 9px;
+  }
+  .eml6 .numbers{
+    font-size: 26px;
+  }
+  .eml5 .images-content{
+    height: 660px;
+    background-position: center bottom;
+  }
+  .eml5 .content{
+    margin-top: 0px;
+  }
+  .eml4 .image{
+    height: 160px;
+  }
+  .eml4 .elm h3{
+    font-size: 14px;
+  }
+  .eml4 .elm p{
+    font-size: 12px;
+  }
+  .eml1 .eml1-content h3{
+    font-size: 16px;
+  }
+  .eml1 .eml1-content p{
+    font-size: 10px;
+  }
+  .button-menu{
+    display: flex;
+    z-index: 9999;
+  }
+  .links{
+    opacity: 0;
+    border-bottom: 3px solid #212529;
+    position: absolute;
+    top: 51px;
+    width: 300px;
+    height: 0px;
+    max-width: 100%;
+    left: 0;
+    transition: 1s height;
+    overflow: hidden;
+
+  }
+  .links ul{
+    flex-direction: column;
+
+  }
+  .links ul li{
+    padding: 10px;
+
+  }
+  .header__content h2{
+    text-align: center;
+    font-size: 20px;
+
+  }
+  .header__content h1{
+    font-size: 35px;
+  }
+  .header__content p{
+    font-size: 12px;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 767px) {
+  .eml9 .content .logo .image_logo{
+    width: 64px;
+    height: 56px;
+    background-size: auto;
+  }
+  .eml9 .content .logo{
+    align-items: center;
+  }
+  .eml9 .content h3{
+    font-size: 1.75rem;
+  }
+  .eml9 .content .logo .logo-text{
+    font-size: 34px;
+  }
+  .eml9 .content .text p{
+    font-size: 14px;
+  }
+  .eml9 .content .post{
+    font-size: 14px;
+  }
+  .eml9 .content .post-cus{
+    font-size: 16px;
+  }
+  .eml9 .content .post a{
+    font-size: 14px;
+  }
+  .footer .content{
+    margin-top: 10px;
+  }
+  .eml9{
+    padding: 40px 0;
+  }
+  .eml8{
+    padding: 80px 0 30px;
+  }
+  .margin{
+    margin: 0px 0px 25px;
+  }
+  .eml6 .text{
+    font-size: 14px;
+  }
+  .eml6 .numbers{
+    font-size: 40px;
+  }
+  .eml5 .list li{
+    margin-left: 20px;
+  }
+  .eml5{
+    padding: 40px 0 40px;
+  }
+  .eml5 .images-content{
+    margin-bottom: 25px;
+  }
+  .eml4 .image{
+    height: 240px;
+  }
+  .eml4 .elm h3{
+    font-size: 18px;
+  }
+  .eml4 .elm p{
+    font-size: 16px;
+  }
+  .eml4 a{
+    display: inline-flex;
+  }
+  .eml4-buttons{
+    text-align: center;
+  }
+  .eml1 .eml1-content p{
+    font-size: 18px;
+  }
+  .eml1 .eml1-content h3 {
+    font-size: 26px;
+  }
+  .header__content h1{
+    font-size: 22px;
+    text-align: center;
+  }
+  .header__content h2{
+    text-align: center;
+    font-size: 14px;
+
+  }
+  .header__content p{
+    font-size: 10px;
+  }
+  .header__button{
+    width: 120px;
+    height: 40px;
+  }
+}
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+  .eml5 .images-content{
+    height: 500px;
+  }
+  .eml5 .list li{
+    margin-left: 0px;
+  }
+  .video .content p{
+    font-size: 14px;
+  }
+  .video .content h2{
+    font-size: 24px;
+  }
+  .header__content{
+    width: 100%;
+  }
+  .owl-next,.owl-prev{
+    display: none !important;
+  }
+  .header__content h1{
+    font-size: 26px;
+  }
+  .header__content h2{
+    font-size: 18px;
+  }
+  .top-menu .outside .logotype .logo{
+    width: 35px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .top-menu .outside .logotype .slogan a{
+    font-size: 20px;
+  }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+}
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 991px) {
+  .links {
+    transform: translateX(0px) !important;
+    height: auto !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}

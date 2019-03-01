@@ -1303,3 +1303,100 @@ section {
     height: 0;
   }
 }
+
+.registration__page {
+  font-family: 'Open Sans', sans-serif;
+  background: url("../images/photo000.jpg") no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registration__page .form__registration {
+  box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.5);
+  border-radius: .5rem;
+}
+
+.registration__page .form__registration .form-group--custom {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.registration__page .form__registration .form-group--custom .input__text {
+  font-size: 14px;
+  border: none;
+  border-bottom: 1px solid #333;
+  margin-left: 10px;
+  flex: 1;
+  outline: none;
+}
+
+.registration__page .form__registration .form-group--custom .input__text--custom {
+  border-bottom: none;
+  margin: 0;
+}
+
+.registration__page .form__registration .form-group--custom span {
+  color: #ff3048;
+}
+
+.registration__page .form__wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.registration__page .form__head {
+  background: #202b3d;
+  color: #fff;
+  width: 100%;
+  height: 70px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.registration__page .form__body {
+  background: #fff;
+  width: 400px;
+  max-height: calc(100vh - 100px);
+  padding: 1rem;
+  overflow: auto;
+}
+
+.btn__red {
+  outline: none;
+  padding: 7px 10px;
+  background: #ff3048;
+  border: none;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 6px 20px 0px #ff4258;
+}
+
+.btn__red:hover {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.btn__darkBlue {
+  outline: none !important;
+  padding: 7px 10px;
+  background: #1b232e;
+  border: none;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 6px 20px 0px #202b3d;
+}
+
+.btn__darkBlue:hover {
+  transform: translateY(3px);
+  box-shadow: none;
+}
