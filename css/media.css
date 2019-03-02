@@ -2,6 +2,7 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
+<<<<<<< HEAD
     .eml6 .text{
         font-size: 12px;
     }
@@ -23,10 +24,14 @@
     .eml1 .eml1-content h3{
         font-size: 24px;
     }
+=======
+
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
+<<<<<<< HEAD
     .eml9 .content .logo .image_logo{
         width: 35px;
         height: 30px;
@@ -114,10 +119,29 @@
     }
     .header__content p{
         font-size: 12px;
+=======
+    .top_nav >li{
+        display: block;
+        padding: 20px 0;
+}
+    .top_nav {
+        display: none;
+        top: 80px;
+        position: absolute;
+        background: #fdfafa;
+        width: 100%;
+        left: 0;
+    }
+    .top_menu{
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
     }
 }
 
 /* Small Devices, Tablets */
+<<<<<<< HEAD
 @media only screen and (max-width : 767px) {
     .eml9 .content .logo .image_logo{
         width: 64px;
@@ -209,11 +233,17 @@
         width: 120px;
         height: 40px;
     }
+=======
+@media only screen and (max-width : 768px) {
+
+
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 }
 
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
+<<<<<<< HEAD
     .eml5 .images-content{
         height: 500px;
     }
@@ -247,6 +277,9 @@
     .top-menu .outside .logotype .slogan a{
         font-size: 20px;
     }
+=======
+
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 }
 
 /* Custom, iPhone Retina */
@@ -273,11 +306,17 @@
 }
 
 /* Medium Devices, Desktops */
+<<<<<<< HEAD
 @media only screen and (min-width : 991px) {
     .links {
         transform: translateX(0px) !important;
         height: auto !important;
         opacity: 1 !important;
+=======
+@media only screen and (min-width : 992px) {
+    .top_nav {
+        display: block !important;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
     }
 }
 

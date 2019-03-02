@@ -1,5 +1,8 @@
 $wite: #fff;
+<<<<<<< HEAD
 $menutext: #212529;
+=======
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 $font1: 'Raleway', sans-serif;
 $font2: 'Montserrat', sans-serif;
 h2,h3{
@@ -22,6 +25,7 @@ a{
   font-size: 14px;
   color: $wite;
 }
+<<<<<<< HEAD
 
 .button-menu{
   display: none;
@@ -136,10 +140,44 @@ a{
       margin-bottom: 0;
       li{
         list-style-type: none;
+=======
+.nav__battons{
+  ul{
+  display: flex;
+  margin-bottom: 0px;
+  list-style: none;
+  padding-left: 0px;
+    li:first-child{
+    margin: 0 1rem;
+
+  }
+    li{
+      a{
+        padding: 1.2rem 0;
+        display: flex;
+      }
+    }
+}
+
+}
+.nav__logo {
+  width: 64px;
+  height: 56px;
+  background: url(../images/logos.png);
+}
+.nav__links{
+  ul{
+    li{
+      margin: 0 1rem;
+      a{
+        display: flex;
+        padding: 1.2rem 0;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
       }
     }
   }
 }
+<<<<<<< HEAD
 .scroll{
   padding: 10px 0;
   background-color: $wite;
@@ -170,6 +208,23 @@ a{
  .outside .links{
   }
 }
+=======
+.brand{
+  display: flex;
+  align-items: center;
+  a{
+    font-family: $font1;
+    font-size: 30px;
+  }
+}
+.navigation{
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  padding: 1rem 0.5rem;
+}
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 header{
   position: relative;
   background: rgba(0,0,0,0.5);
@@ -177,26 +232,44 @@ header{
 .header__images1 {
   background: url("../images/header1.jpg");
   background-size: cover;
+<<<<<<< HEAD
   background-position: center center ;
   width: 100%;
   height: 100vh;
   min-height: 600px;
+=======
+  background-position: center 0 ;
+  width: 100%;
+  height: 100vh;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 }
 .header__images2 {
   background: url("../images/header2.jpg");
   background-size: cover;
+<<<<<<< HEAD
   background-position: center center ;
   width: 100%;
   height: 100vh;
   min-height: 600px;
+=======
+  background-position: center 0 ;
+  width: 100%;
+  height: 100vh;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 }
 .header__images3 {
   background: url("../images/header3.jpg");
   background-size: cover;
+<<<<<<< HEAD
   background-position: center center ;
   width: 100%;
   height: 100vh;
   min-height: 600px;
+=======
+  background-position: center 0 ;
+  width: 100%;
+  height: 100vh;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 }
 .header__images-overlay{
   width: 100%;
@@ -311,7 +384,10 @@ section{
 }
 .eml1{
   padding: 5rem 0;
+<<<<<<< HEAD
   background: $wite;
+=======
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
   .eml1-content{
     display: flex;
     flex-direction: column;
@@ -399,17 +475,28 @@ section{
   font-family: $font1;
   font-weight: bold;
   transition: all 0.7s ease;
+<<<<<<< HEAD
   cursor: pointer;
+=======
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
   &:hover{
     background: #ff7c00;
     border-radius: 2px;
   }
+<<<<<<< HEAD
 }
 .eml4{
   background: $wite;
   .button{
     margin-top: 40px;
     color: white;
+=======
+
+}
+.eml4{
+  .button{
+    margin-top: 40px;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
   }
   padding: 5rem 0;
   p{
@@ -442,7 +529,11 @@ section{
   .image{
     position: relative;
     overflow: hidden;
+<<<<<<< HEAD
     height: 300px;
+=======
+    height: 240px;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
     img {
       display: block;
       margin: 0 auto;
@@ -459,10 +550,16 @@ section{
     flex-direction: column;
     justify-content: center;
     width: 100%;
+<<<<<<< HEAD
     height: 120px;
     background-color: #fbfaf8;
     padding: 0 0 0 30px;
 
+=======
+    height: 90px;
+    background-color: #fbfaf8;
+    padding: 0 0 0 30px;
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
     .arrow{
       transition: all 0.5s;
       position: absolute;
@@ -477,7 +574,10 @@ section{
   }
   .elm{
     margin: 25px 0 0 0;
+<<<<<<< HEAD
     cursor: pointer;
+=======
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
     &:hover .arrow{
       background: url("../images/arrow_eml4_black.png"); ;
     }
@@ -948,7 +1048,10 @@ section{
 }
 .footer{
   padding: 45px 0;
+<<<<<<< HEAD
   position: relative;
+=======
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
   width: 100%;
   background-color: #111111;
   .content{
@@ -974,6 +1077,7 @@ section{
 }
 
 
+<<<<<<< HEAD
 .login_wrap{
   position: absolute;
   left: 50%;
@@ -1250,5 +1354,7 @@ section{
 }
 
 
+=======
+>>>>>>> 3981e46c2fd07c2271660f8e10ed18f04be563b3
 
 
