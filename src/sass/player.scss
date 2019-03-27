@@ -1,4 +1,52 @@
+.top__panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  background: #ff4258;
+  z-index: 99999;
+
+  &:hover .player{
+    transform: translateY(0);
+  }
+
+  .block__right {
+    display: flex;
+  }
+  .log__out {
+    background: url("../assets/player/24069.svg");
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+
+  }
+}
+
+.playList__panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 45px;
+  height: 100vh;
+  overflow: hidden;
+  background: #1b232e;
+  transition: .5s ease-in-out;
+
+  &:hover {
+    width: 650px;
+  }
+
+  &:hover .list .loader{
+    display: flex;
+  }
+
+  &-button-load {
+    white-space: nowrap;
+  }
+}
+
 .player-styles {
+  position: relative;
   font-family: 'Righteous', cursive;
   //background: url("../assets/images/photo000.jpg") no-repeat;
   background-size: cover;
@@ -86,13 +134,15 @@
     font-weight: bold;
     color: white;
   }
-  .player{
+
+  .player {
     background: #5a5e84;
-    width: 650px;
-    margin: 0 auto;
-    padding: 10px;
+    width: 100%;
+    //padding: 10px;
     box-shadow: 4px 4px 10px 0 #584f536b;
-    transition: top,padding,background-color  1s ease;
+    //transition: top,padding,background-color  1s ease;
+    padding: 10px 100px;
+    z-index: 11;
 
   }
   .top_nav{
@@ -101,11 +151,12 @@
     align-items: center;
   }
 
-  .panel{
+  .block__visualizer{
     display: flex;
-    justify-content: center;
     margin-bottom: 10px;
     transition: all 1s;
+    justify-content: center;
+    overflow: hidden;
   }
   .settings{
     display: flex;
@@ -187,128 +238,6 @@
   }
 
 
-  .ev1{
-    background: linear-gradient(to bottom, #00e7ff, #4c3933);
-  }
-  .ev2{
-    left: 8px;
-    background: linear-gradient(to bottom, #00e7ff, #4c3933);
-  }
-  .ev3{
-    left: 16px;
-    background: linear-gradient(to bottom, #00e7ff, #4c3933);
-  }
-  .ev4{
-    left: 24px;
-    background: linear-gradient(to bottom, #00e7ff, #4c3933);
-  }
-  .ev5{
-    left: 32px;
-    background: linear-gradient(to bottom, #4bff00, #4c3933);
-  }
-  .ev6{
-    left: 40px;
-    background: linear-gradient(to bottom, #4bff00, #4c3933);
-  }
-  .ev7{
-    left: 48px;
-    background: linear-gradient(to bottom, #4bff00, #4c3933);
-  }
-  .ev8{
-    left: 56px;
-    background: linear-gradient(to bottom, #4bff00, #4c3933);
-  }
-  .ev9{
-    left: 64px;
-    background: linear-gradient(to bottom, #4bff00, #4c3933);
-  }
-  .ev10{
-    left: 72px;
-    background: linear-gradient(to bottom, #ccff00, #4c3933);
-  }
-  .ev11{
-    left: 80px;
-    background: linear-gradient(to bottom, #ccff00, #4c3933);
-  }
-  .ev12{
-    left: 88px;
-    background: linear-gradient(to bottom, #ccff00, #4c3933);
-  }
-  .ev13{
-    left: 96px;
-    background: linear-gradient(to bottom, #ccff00, #4c3933);
-  }
-  .ev14{
-    left: 104px;
-    background: linear-gradient(to bottom, #ccff00, #4c3933);
-  }
-  .ev15{
-    left: 112px;
-    background: linear-gradient(to bottom, #ffe000, #4c3933);
-  }
-  .ev16{
-    left: 120px;
-    background: linear-gradient(to bottom, #ffe000, #4c3933);
-  }
-  .ev17{
-    left: 128px;
-    background: linear-gradient(to bottom, #ffe000, #4c3933);
-  }
-  .ev18{
-    left: 136px;
-    background: linear-gradient(to bottom, #ffe000, #4c3933);
-  }
-  .ev19{
-    left: 144px;
-    background: linear-gradient(to bottom, #ffe000, #4c3933);
-  }
-  .ev20{
-    left: 152px;
-    background: linear-gradient(to bottom, #ff7702, #4c3933);
-  }
-  .ev21{
-    left: 160px;
-    background: linear-gradient(to bottom, #ff7702, #4c3933);
-  }
-  .ev22{
-    left: 168px;
-    background: linear-gradient(to bottom, #ff7702, #4c3933);
-  }
-  .ev23{
-    left: 176px;
-    background: linear-gradient(to bottom, #ff7702, #4c3933);
-  }
-  .ev24{
-    left: 184px;
-    background: linear-gradient(to bottom, #ff7702, #4c3933);
-  }
-  .ev25{
-    background: linear-gradient(to bottom, #ff0202, #4c3933);
-    left: 192px;
-  }
-  .ev26{
-    background: linear-gradient(to bottom, #ff0202, #4c3933);
-    left: 200px;
-  }
-  .ev27{
-    background: linear-gradient(to bottom, #ff0202, #4c3933);
-    left: 208px;
-  }
-  .ev28{
-    background: linear-gradient(to bottom, #ff0202, #4c3933);
-    left: 216px;
-  }
-  .ev29{
-    background: linear-gradient(to bottom, #ff0202, #4c3933);
-    left: 224px;
-  }
-  .ev30{
-    background: linear-gradient(to bottom, #ff0202, #4c3933);
-    left: 232px;
-  }
-  .ev1,.ev2,.ev3,.ev4,.ev5,.ev6,.ev7,.ev8,.ev9,.ev10,.ev11,.ev12,.ev13,.ev14,.ev15,.ev16,.ev17,.ev18,.ev19,.ev20,.ev21,.ev22,.ev23,.ev24,.ev25,.ev26,.ev27,.ev28,.ev29,.ev30{
-    background: linear-gradient(to bottom, #72e6cf, #72e6cf);
-  }
   .visualizer{
     display: flex;
     align-items: flex-end;
@@ -317,27 +246,20 @@
 
 
     &__item {
-      width: 1px;
+      width: 2px;
       transition: 0.2s linear;
-      margin-left: 3px;
-      background: red;
+      margin-left: 0;
+      background: linear-gradient(0deg, rgb(56, 0, 253) -50%,
+              rgb(255, 0, 146) 40%,
+              yellow 65%,
+              gold 90%,
+              red 100%);
     }
 
   }
 
-
-  .ev1, .ev2, .ev3, .ev4, .ev5, .ev6,.ev7, .ev8, .ev9, .ev10,.ev11,.ev12,.ev13,.ev14,.ev15,.ev16,.ev17,.ev18,.ev19
-  ,.ev20,.ev21,.ev22,.ev23,.ev24,.ev25,.ev26,.ev27,.ev28,.ev29,.ev30{
-    width: 1px;
-    height: 3px;
-    position: absolute;
-    bottom: 0px;
-  }
   .list{
-    width: 650px;
-    margin: 10px auto;
     padding: 0 10px 0;
-    background: #5a5e84;
   }
   .click{
     color: #383a4c;
@@ -374,19 +296,29 @@
     border-bottom: 1px solid #72e6cf;
     .post{
       display: flex;
+      flex-shrink: 0;
+
       .list-play{
         margin-right: 10px;
+      }
+
+      .song-name {
+        width: 515px;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
     .controls-song{
       display: flex;
       color: #72e6cf;
       font-size: 1rem;
+
       .delete{
         display: flex;
         cursor: pointer;
         padding: 7px;
       }
+
       .download{
         padding: 5px;
         color: #72e6cf;
@@ -395,10 +327,31 @@
 
     .activeCurrent {
       color: red;
+
+      .fa-play {
+        display: none !important;
+      }
+
+      .fa-pause {
+        display: inline-flex !important;
+      }
+    }
+
+    .activeCurrentPaused {
+      .fa-play {
+        display: inline-flex !important;
+      }
+
+      .fa-pause {
+        display: none !important;
+      }
     }
   }
   .list{
-    box-shadow: 4px 4px 10px 0px #584f536b;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
     transition: all 1s;
   }
   .scroll{

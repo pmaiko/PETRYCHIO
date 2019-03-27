@@ -1,96 +1,120 @@
 <template>
     <div class="login player-styles">
-        <canvas class="canvas"></canvas>
-        <div class="player">
-            <button class="btn btn-outline-danger"
-                    @click="logOut">
-                Выход
-            </button>
-            <img src="" alt="" width="30px" height="30px">
-            <div class="panel">
-                <div class="visualizer">
+        <transition name="fade">
+            <loader v-show="isResult"></loader>
+        </transition>
+        <!--<canvas class="canvas"></canvas>-->
+        <div class="top__panel">
+            <div class="block__right">
+                <div class="user__name">
+                    Петя Майко
+                </div>
+                <div class="user__photo">
+                    <img src="../../assets/logo.png" alt="" width="30px" height="30px">
+                </div>
+                <div class="open__player"
+                     @click="isShowPlayer = !isShowPlayer">
+                    Knopka
                 </div>
             </div>
-            <div class="nameSong">{{ songCurrentName }}</div>
-            <div class="control">
-                <div class="block-lef">
-                    <div class="repeat"
-                         :class="{'click': songRepeat}"
-                         @click="songRepeat = !songRepeat"
-                    >
-                        <i class="fas fa-redo"></i>
-                    </div>
-                    <div class="time">{{songCurrentTime}}</div>
-                </div>
-                <div class="block-cen">
-                    <div class="prev"
-                         @click="prevTrack($event)">
-                        <i class="fa fa-backward" aria-hidden="true"></i>
-                    </div>
-                    <div class="play-pause"
-                         :class="{'d-none': iconActiveMainPlay}"
-                         @click="playTrack">
-                        <i class="fa fa-play" aria-hidden="true"></i>
-                    </div>
-                    <div class="pause"
-                         @click="playTrack"
-                         :class="{'d-none': !iconActiveMainPlay}">
-                        <i class="fa fa-pause" aria-hidden="true"></i>
-                    </div>
-                    <div class="next"
-                         @click="nextTrack($event)">
-                        <i class="fa fa-forward" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="block-rig">
-                    <div class="mute">
-                        <i class="fas fa-volume-up"
-                           :class="{'d-none':volumeValue === '0'}"></i>
-                        <i class="fa fa-volume-off d-none"
-                           aria-hidden="true"
-                           :class="{'d-flex':volumeValue === '0'}"></i>
-                    </div>
-                    <input type="range" class="volume" min="0" max="100" v-model="volumeValue">
+            <div class="block__right">
+                <div class="log__out"
+                     @click="logOut">
                 </div>
             </div>
-            <div class="timetobar">
-
-                <div class="setTime"
-                     :class="{'d-flex': songMouseHoverTime,
-                     'd-none': !songMouseHoverTime}">
-                    {{ songMouseHoverTimeOut }}
-                </div>
-                <div class="range"
-                     @mouseenter="goToTimeMouseOverEnter"
-                     @mousemove="goToTime($event)"
-                     @click="setTime"
-                     @mouseleave="goToTimeMouseLeave">
-                    <div class="progress"></div>
-                    <!--<div class="loadSongPr"></div>-->
-                </div>
-
-            </div>
-
         </div>
-        <div class="list-wrap">
-            <div class="list">
-                <b-button v-b-modal.modal1>download file</b-button>
-
-                <div v-for="(item, index) in result" class="content" :id="index+1">
-                    <div @click="playSong($event)" class="post" :id="index" :data-video-src="item.Song">
-                        <div class="list-play"><i class="fa fa-play" aria-hidden="true"></i><i class="fa fa-pause" aria-hidden="true"></i></div>
-                        <div class="song-name">{{item.Name}}</div>
-                    </div>
-                    <div class="controls-song">
-                        <div :id_song="item.id"
-                             :data-video-src="item.Song"
-                             class="delete"
-                             @click="trackDelete($event)"
-                        >
-                            <i class="fa fa-times" aria-hidden="true"></i></div>
-                        <a :href="item.Song" download><div class="download"><i class="fa fa-cloud-download" aria-hidden="true"></i></div></a>
+        <transition name="fade">
+            <div class="player" v-show="isShowPlayer">
+                <div class="block__visualizer">
+                    <div class="visualizer">
                     </div>
                 </div>
+                <div class="nameSong">{{ songCurrentName }}</div>
+                <div class="control">
+                    <div class="block-lef">
+                        <div class="repeat"
+                             :class="{'click': songRepeat}"
+                             @click="songRepeat = !songRepeat"
+                        >
+                            <i class="fas fa-redo"></i>
+                        </div>
+                        <div class="time">{{songCurrentTime}}</div>
+                    </div>
+                    <div class="block-cen">
+                        <div class="prev"
+                             @click="prevTrack($event)">
+                            <i class="fa fa-backward" aria-hidden="true"></i>
+                        </div>
+                        <div class="play-pause"
+                             :class="{'d-none': iconActiveMainPlay}"
+                             @click="playTrack">
+                            <i class="fa fa-play" aria-hidden="true"></i>
+                        </div>
+                        <div class="pause"
+                             @click="playTrack"
+                             :class="{'d-none': !iconActiveMainPlay}">
+                            <i class="fa fa-pause" aria-hidden="true"></i>
+                        </div>
+                        <div class="next"
+                             @click="nextTrack($event)">
+                            <i class="fa fa-forward" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="block-rig">
+                        <div class="mute">
+                            <i class="fas fa-volume-up"
+                               :class="{'d-none':volumeValue === '0'}"></i>
+                            <i class="fa fa-volume-off d-none"
+                               aria-hidden="true"
+                               :class="{'d-flex':volumeValue === '0'}"></i>
+                        </div>
+                        <input type="range" class="volume" min="0" max="100" v-model="volumeValue">
+                    </div>
+                </div>
+                <div class="timetobar">
+
+                    <div class="setTime"
+                         :class="{'d-flex': songMouseHoverTime,
+                     'd-none': !songMouseHoverTime}">
+                        {{ songMouseHoverTimeOut }}
+                    </div>
+                    <div class="range"
+                         @mouseenter="goToTimeMouseOverEnter"
+                         @mousemove="goToTime($event)"
+                         @click="setTime"
+                         @mouseleave="goToTimeMouseLeave">
+                        <div class="progress"></div>
+                        <!--<div class="loadSongPr"></div>-->
+                    </div>
+
+                </div>
+
+            </div>
+        </transition>
+        <div class="playList__panel">
+            <div class="list">
+                <b-button variant="outline-primary" class="playList__panel-button-load" v-b-modal.modal1>download file</b-button>
+                <loader v-show="result === ''"></loader>
+                <template>
+                    <div v-for="(item, index) in result" class="content" :id="index+1">
+                        <div @click="playSong($event)" class="post" :id="index" :data-video-src="item.Song">
+                            <div class="list-play">
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                                <i class="fa fa-pause d-none" aria-hidden="true"></i>
+                            </div>
+                            <div class="song-name"><span>{{item.Name}}</span></div>
+                        </div>
+                        <div class="controls-song">
+                            <div :id_song="item.id"
+                                 :data-video-src="item.Song"
+                                 class="delete"
+                                 @click="trackDelete($event)"
+                            >
+                                <i class="fa fa-times" aria-hidden="true"></i></div>
+                            <a :href="item.Song" download><div class="download"><i class="fa fa-cloud-download" aria-hidden="true"></i></div></a>
+                        </div>
+                    </div>
+                </template>
 
             </div>
         </div>
@@ -110,14 +134,19 @@
     </div>
 </template>
 <script>
-    import $ from 'jquery'
+    import loader from '../module/loader'
+    // import $ from 'jquery'
     import axios from 'axios'
     import playerMixin from '../../mixins'
 
     export default {
         data() {
             return {
-                result: [],
+                songCurrentName: 'Song Name',
+                clickCurrentPlaySongEvent: '',
+                isShowPlayer: false,
+                result: '',
+                isResult: true,
                 count: 1,
                 iconActiveMainPlay: false,
                 renderPage: false,
@@ -160,6 +189,9 @@
                 max_songs: '',
             }
         },
+        components: {
+            loader,
+        },
         mixins: [
             playerMixin,
         ],
@@ -176,16 +208,15 @@
                 this.$store.state.authUser[3] = '';
 
             },
-
             trackDelete(e) {
+                this.result = '';
                 const id_song = e.currentTarget.getAttribute('id_song');
-                console.log(id_song);
                 axios({
                     method: 'post',
                     url: '/api/delete.php',
                     data: {
                         id_song_delete: id_song,
-                    }
+                }
                 }).then(response => {
                     this.$store.dispatch('selectPlaylist',this.$cookie.get('user_id'));
                 })
@@ -197,7 +228,6 @@
                 const trackFiles = document.querySelector('#files');
                 data.append('user_id', this.$cookie.get('user_id'));
                 for (let i=0; i<trackFiles.files.length; i++) {
-                    console.log(trackFiles.files[i]);
                     data.append('file', trackFiles.files[i]);
 
                     await axios.post('/api/upload_music.php', data, {
@@ -206,7 +236,6 @@
                         }
                     })
                         .then(response => {
-                            console.log(response)
                             this.$store.dispatch('selectPlaylist',this.$cookie.get('user_id'));
                         })
                         .catch(error => {
@@ -222,6 +251,7 @@
             },
 
             playSong(e) {
+                this.clickCurrentPlaySongEvent = e.currentTarget;
                 this.songCurrentName = e.currentTarget.querySelector('.song-name').innerHTML.replace(/\.[^/.]+$/, "");
                 this.iconActiveMainPlay = true;
                 this.removeActiveCurrentClass();
@@ -237,9 +267,12 @@
                 else {
                     if (this.song.paused) {
                         this.song.play();
+                        e.currentTarget.classList.remove('activeCurrentPaused');
                     }
                     else {
                         this.song.pause();
+                        e.currentTarget.classList.add('activeCurrentPaused');
+
                     }
                 }
 
@@ -266,9 +299,12 @@
                 else {
                     if (this.song.paused) {
                         this.song.play();
+                        this.clickCurrentPlaySongEvent.classList.remove('activeCurrentPaused');
                     }
                     else {
                         this.song.pause();
+                        this.selectSrcActiveCurrentPaused(this.srcId);
+                        this.clickCurrentPlaySongEvent.classList.add('activeCurrentPaused');
                     }
                 }
             },
@@ -358,9 +394,9 @@
 
             visuallizer() {
                 this.analyser = this.audioCtx.createAnalyser();
-                this.analyser.fftSize = 256;
+                this.analyser.fftSize = 1024;
                 this.analyser.minDecibels = -70;
-                this.analyser.maxDecibels = -10;
+                this.analyser.maxDecibels = -30;
                 this.analyser.smoothingTimeConstant = 0;
                 this.source = this.audioCtx.createMediaElementSource(this.song);
                 this.source.connect(this.analyser);
@@ -368,7 +404,6 @@
 
 
                 this.array = new Uint8Array(this.analyser.frequencyBinCount);
-
                 for (let i=0; i<this.array.length -10; i++){
                     let block = document.querySelector('.visualizer');
                     let newBlock = document.createElement('div');
@@ -379,58 +414,58 @@
                 for (let i=0; i < this.array.length; i++) {
 
                 }
-                console.log(this.analyser);
+                // console.log(this.analyser);
                 this.visualizerMinValue = 2;
                 this.analyser.getByteFrequencyData(this.array);
             },
 
-            isCanvas() {
-                const c = document.querySelector(".canvas");
-                // c.width = window.innerWidth;
-                // c.height = window.innerHeight;
-                this.ctx = c.getContext("2d");
-                let s = this;
-                function col(r, g, b) {
-                    s.ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-                    s.ctx.fillRect(0, 0, window.innerWidth,window.innerHeight);
-                }
-                function R(x, y, t) {
-                    return( Math.floor(192 + 64*Math.cos( (x*x-y*y)/300 + t )) );
-                }
-
-                function G(x, y, t) {
-                    return( Math.floor(192 + 64*Math.sin( (x*x*Math.cos(t/4)+y*y*Math.sin(t/3))/300 ) ) );
-                }
-
-                function B(x, y, t) {
-                    // console.log(Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-100)*(x-100)+(y-100)*(y-100))/1100) ));
-                    return( Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-100)*(x-100)+(y-100)*(y-100))/1100) ));
-                }
-                // function getRandom(max,min) {
-                //     return Math.random() * (max - min) + min;
-                // }
-                //
-                // function R(x,y,t) {
-                //     return(getRandom(255-t, 0));
-                // }
-                //
-                // function G(x,y,t) {
-                //     return(getRandom(255-t, 0));
-                // }
-                //
-                // function B(x,y,t) {
-                //     return(getRandom(255-t, 0));
-                // }
-                let t = 0;
-                function run () {
-                    col(R(1,1,t), G(1,1,t), B(1,1,t));
-                    t = t + .009;
-                    window.requestAnimationFrame(run);
-                }
-
-                run();
-
-            }
+            // isCanvas() {
+            //     const c = document.querySelector(".canvas");
+            //     // c.width = window.innerWidth;
+            //     // c.height = window.innerHeight;
+            //     this.ctx = c.getContext("2d");
+            //     let s = this;
+            //     function col(r, g, b) {
+            //         s.ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+            //         s.ctx.fillRect(0, 0, window.innerWidth,window.innerHeight);
+            //     }
+            //     function R(x, y, t) {
+            //         return( Math.floor(192 + 64*Math.cos( (x*x-y*y)/300 + t )) );
+            //     }
+            //
+            //     function G(x, y, t) {
+            //         return( Math.floor(192 + 64*Math.sin( (x*x*Math.cos(t/4)+y*y*Math.sin(t/3))/300 ) ) );
+            //     }
+            //
+            //     function B(x, y, t) {
+            //         // console.log(Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-100)*(x-100)+(y-100)*(y-100))/1100) ));
+            //         return( Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-100)*(x-100)+(y-100)*(y-100))/1100) ));
+            //     }
+            //     // function getRandom(max,min) {
+            //     //     return Math.random() * (max - min) + min;
+            //     // }
+            //     //
+            //     // function R(x,y,t) {
+            //     //     return(getRandom(255-t, 0));
+            //     // }
+            //     //
+            //     // function G(x,y,t) {
+            //     //     return(getRandom(255-t, 0));
+            //     // }
+            //     //
+            //     // function B(x,y,t) {
+            //     //     return(getRandom(255-t, 0));
+            //     // }
+            //     let t = 0;
+            //     function run () {
+            //         col(R(1,1,t), G(1,1,t), B(1,1,t));
+            //         t = t + .009;
+            //         window.requestAnimationFrame(run);
+            //     }
+            //
+            //     run();
+            //
+            // }
         },
         beforeCreate() {
             if (this.$cookie.get('login') === null) {
@@ -443,7 +478,7 @@
         },
         mounted() {
           this.visuallizer();
-          this.isCanvas();
+          // this.isCanvas();
 
         },
 
@@ -451,6 +486,7 @@
             isPlayList() {
                 if (this.$store.state.playListUser) {
                     this.result = this.$store.state.playListUser;
+                    this.isResult = false;
                 }
             },
 
@@ -504,12 +540,12 @@
 
                     //canvas
                     //s.analyser.frequencyBinCount
-                    s.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+                        //s.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
                     //s.ctx.fillStyle = 'red';
-                    for (let i=0; i < s.array.length - 10; i++) {
-                        s.ctx.fillStyle = 'rgb(' + s.array[i] + ',50,50)';
-                        s.ctx.fillRect(window.innerWidth/2,window.innerHeight/2,s.array[i],s.array[i]);
-                    }
+                    // for (let i=0; i < s.array.length - 10; i++) {
+                    //     s.ctx.fillStyle = 'rgb(' + s.array[i] + ',50,50)';
+                    //     s.ctx.fillRect(window.innerWidth/2,window.innerHeight/2,s.array[i],s.array[i]);
+                    // }
                 }
             },
         },

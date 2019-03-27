@@ -6,7 +6,7 @@ import axios from 'axios'
 const store = new Vuex.Store({
     state: {
         authUser: {},
-        playListUser: {}
+        playListUser: '',
     },
     mutations: {
         mtLogin(state, {type, items}) {
@@ -41,7 +41,7 @@ const store = new Vuex.Store({
                 }
             }).then(function (dataOutINServer) {
                 const result = dataOutINServer.data;
-                commit('mtSelectList', {type: 'playListUser', items: result})
+                commit('mtSelectList', {type: 'playListUser', items: result});
             })
         }
     }

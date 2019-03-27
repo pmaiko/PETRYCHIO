@@ -3,7 +3,6 @@ export default {
         return {
             srcReturn: '',
             classReturn: '',
-            songCurrentName: 'Song Name',
         };
     },
 
@@ -16,10 +15,16 @@ export default {
 
         },
 
+        selectSrcActiveCurrentPaused (index) {
+            const element = this.$el.querySelectorAll('.post');
+            element[index].classList.add('activeCurrentPaused');
+        },
+
         removeActiveCurrentClass() {
             const element = this.$el.querySelectorAll('.post');
             for(let i = 0; i < element.length; i++) {
                 element[i].classList.remove('activeCurrent');
+                element[i].classList.remove('activeCurrentPaused');
             }
         }
     }
