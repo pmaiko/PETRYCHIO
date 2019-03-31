@@ -1,5 +1,5 @@
 <template>
-    <div class="login player-styles">
+    <div class="login player-styles" :style="`background-image: url(${$store.state.randomCover.images})`">
         <transition name="fade">
             <loader v-show="isResult"></loader>
         </transition>
@@ -16,6 +16,12 @@
                      @click="isShowPlayer = !isShowPlayer">
                     Knopka
                 </div>
+
+                <b-button variant="outline-primary" class="s" v-b-modal.modal2>
+                    <span>Загурузить подложки</span>
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                </b-button>
+
             </div>
             <div class="block__right">
                 <div class="log__out"
@@ -91,32 +97,47 @@
 
             </div>
         </transition>
-        <div class="playList__panel">
-            <div class="list">
-                <b-button variant="outline-primary" class="playList__panel-button-load" v-b-modal.modal1>download file</b-button>
-                <loader v-show="result === ''"></loader>
-                <template>
-                    <div v-for="(item, index) in result" class="content" :id="index+1">
-                        <div @click="playSong($event)" class="post" :id="index" :data-video-src="item.Song">
-                            <div class="list-play">
-                                <i class="fa fa-play" aria-hidden="true"></i>
-                                <i class="fa fa-pause d-none" aria-hidden="true"></i>
-                            </div>
-                            <div class="song-name"><span>{{item.Name}}</span></div>
-                        </div>
-                        <div class="controls-song">
-                            <div :id_song="item.id"
-                                 :data-video-src="item.Song"
-                                 class="delete"
-                                 @click="trackDelete($event)"
-                            >
-                                <i class="fa fa-times" aria-hidden="true"></i></div>
-                            <a :href="item.Song" download><div class="download"><i class="fa fa-cloud-download" aria-hidden="true"></i></div></a>
-                        </div>
-                    </div>
-                </template>
-
+        <div class="playList__panel"
+             :class="{'toggled': togglePlayList}">
+            <div class="button-open-play-list"
+                 @click="[togglePlayList = !togglePlayList, runText()]">
+                <div class="button-open-play-list__right" :class="{'d-none': togglePlayList}">
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </div>
+                <div class="button-open-play-list__left" :class="{'d-none': !togglePlayList}">
+                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                </div>
             </div>
+            <transition name="fade">
+                <div class="list" v-show="togglePlayList">
+                    <b-button variant="outline-primary" class="playList__panel-button-load" v-b-modal.modal1>
+                        <span>download file</span>
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                    </b-button>
+                    <loader v-show="result === ''"></loader>
+                    <template>
+                        <div v-for="(item, index) in result" class="content" :id="index+1">
+                            <div @click="playSong($event)" class="post" :id="index" :data-video-src="item.Song">
+                                <div class="list-play">
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                    <i class="fa fa-pause d-none" aria-hidden="true"></i>
+                                </div>
+                                <div class="song-name"><span class="song-name__span">{{item.Name}} </span></div>
+                            </div>
+                            <div class="controls-song">
+                                <div :id_song="item.id"
+                                     :data-video-src="item.Song"
+                                     class="delete"
+                                     @click="trackDelete($event)"
+                                >
+                                    <i class="fa fa-times" aria-hidden="true"></i></div>
+                                <a :href="item.Song" download><div class="download"><i class="fa fa-cloud-download" aria-hidden="true"></i></div></a>
+                            </div>
+                        </div>
+                    </template>
+
+                </div>
+            </transition>
         </div>
 
         <!--form-->
@@ -131,6 +152,13 @@
 
             </form>
         </b-modal>
+
+        <b-modal id="modal2" title="BootstrapVue">
+            <form id="uploadCover" name="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="filesImage" name="files" multiple="multiple"><br>
+                <input type="button" value="Upload" @click="this.uploadFilesCover">
+            </form>
+        </b-modal>
     </div>
 </template>
 <script>
@@ -142,6 +170,7 @@
     export default {
         data() {
             return {
+                togglePlayList: false,
                 songCurrentName: 'Song Name',
                 clickCurrentPlaySongEvent: '',
                 isShowPlayer: false,
@@ -208,6 +237,21 @@
                 this.$store.state.authUser[3] = '';
 
             },
+            runText() {
+                this.$nextTick(() => {
+                    let name = document.querySelector('.song-name');
+                    let span = document.querySelectorAll('.song-name__span');
+                    span.forEach((item) =>{
+                        let text = item.innerHTML;
+                        if (item.offsetWidth > name.offsetWidth ) {
+                            setInterval(() => {
+                                text = text[text.length - 1] + text.substring(0, text.length - 1);
+                                item.innerHTML = text;
+                            }, 200)
+                        }
+                    });
+                });
+            },
             trackDelete(e) {
                 this.result = '';
                 const id_song = e.currentTarget.getAttribute('id_song');
@@ -250,9 +294,32 @@
                 }
             },
 
+            async uploadFilesCover () {
+                const data = new FormData(document.getElementById('uploadCover'));
+                const imageFiles = document.querySelector('#filesImage');
+                data.append('user_id', this.$cookie.get('user_id'));
+                for (let i=0; i<imageFiles.files.length; i++) {
+                    data.append('file', imageFiles.files[i]);
+
+                    await axios.post('/api/upload_pic.php', data, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                        .then(response => {
+                            this.$store.dispatch('selectPic',this.$cookie.get('user_id'));
+                            //this.$store.state.randomCover;
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+                }
+            },
+
+
             playSong(e) {
                 this.clickCurrentPlaySongEvent = e.currentTarget;
-                this.songCurrentName = e.currentTarget.querySelector('.song-name').innerHTML.replace(/\.[^/.]+$/, "");
+                this.songCurrentName = e.currentTarget.querySelector('.song-name__span').innerHTML.replace(/\.[^/.]+$/, "");
                 this.iconActiveMainPlay = true;
                 this.removeActiveCurrentClass();
                 e.currentTarget.classList.add('activeCurrent');
@@ -475,11 +542,11 @@
 
         created() {
             this.$store.dispatch('selectPlaylist',this.$cookie.get('user_id'));
+            this.$store.dispatch('selectPic',this.$cookie.get('user_id'));
         },
         mounted() {
           this.visuallizer();
           // this.isCanvas();
-
         },
 
         computed: {
@@ -487,6 +554,20 @@
                 if (this.$store.state.playListUser) {
                     this.result = this.$store.state.playListUser;
                     this.isResult = false;
+
+                    this.$nextTick(() => {
+                        let name = document.querySelector('.song-name');
+                        let span = document.querySelectorAll('.song-name__span');
+                        span.forEach((item) =>{
+                            let text = item.innerHTML;
+                            if (item.offsetWidth > name.offsetWidth ) {
+                                setInterval(() => {
+                                    text = text[text.length - 1] + text.substring(0, text.length - 1);
+                                    item.innerHTML = text;
+                                }, 200)
+                            }
+                        });
+                    });
                 }
             },
 

@@ -27,6 +27,13 @@ Song TEXT,
 Name TEXT,
 id_user MEDIUMINT NOT NULL
 )");
+
+mysqli_query($connect, "CREATE TABLE covers (
+id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+images TEXT,
+id_user MEDIUMINT NOT NULL
+)");
+
 mysqli_query($connect, "INSERT INTO tracks (Song, Name, id_user) VALUES
 ('http://ol5.mp3party.net/online/8418/8418196.mp3', 'Vanotek feat. Eneli - Tell Me Who', '1'),
 ('http://drivemusic.me/dl/3IeFk__7x4KmQzNWelLp3w/1534278291/download_music/2017/08/mr.-da-nos-ohlala-radio-edit.mp3', 'Mr. Da-Nos - Ohlala (Radio Edit)', '1')

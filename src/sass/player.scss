@@ -26,18 +26,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 45px;
   height: 100vh;
-  overflow: hidden;
+  width: 0;
   background: #1b232e;
-  transition: .5s ease-in-out;
+  transition: .7s ease-in-out;
 
-  &:hover {
+  &.toggled {
     width: 650px;
-  }
-
-  &:hover .list .loader{
-    display: flex;
   }
 
   &-button-load {
@@ -217,6 +212,7 @@
   .post{
     display: block;
     padding: 10px;
+    padding-left: 0px;
     color: #fff;
   }
   .time{
@@ -259,7 +255,8 @@
   }
 
   .list{
-    padding: 0 10px 0;
+    padding: 10px 10px 0;
+    width: 100%;
   }
   .click{
     color: #383a4c;
@@ -351,6 +348,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     height: 100vh;
     transition: all 1s;
   }
@@ -427,4 +425,21 @@
   height: 100vh;
   width: 100vw;
   z-index: -1;
+}
+
+.button-open-play-list {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: red;
+  z-index: 999;
+
+  &__right {
+
+  }
+
+  &__left {
+
+  }
 }

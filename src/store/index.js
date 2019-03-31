@@ -7,13 +7,14 @@ const store = new Vuex.Store({
     state: {
         authUser: {},
         playListUser: '',
+        randomCover: '',
     },
     mutations: {
         mtLogin(state, {type, items}) {
             state[type] = items;
         },
 
-        mtSelectList(state, {type, items}) {
+        set(state, {type, items}) {
             state[type] = items;
         }
     },
@@ -41,9 +42,22 @@ const store = new Vuex.Store({
                 }
             }).then(function (dataOutINServer) {
                 const result = dataOutINServer.data;
-                commit('mtSelectList', {type: 'playListUser', items: result});
+                commit('set', {type: 'playListUser', items: result});
             })
-        }
+        },
+
+        selectPic({commit}, cookieID) {
+            axios({
+                method: 'post',
+                url: '/api/selectPic.php',
+                data: {
+                    user_id: cookieID,
+                }
+            }).then(function (dataOutINServer) {
+                const result = dataOutINServer.data;
+                commit('set', {type: 'randomCover', items: result});
+            })
+        },
     }
 });
 

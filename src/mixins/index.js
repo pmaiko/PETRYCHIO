@@ -11,7 +11,7 @@ export default {
             const element = this.$el.querySelectorAll('.post');
             this.srcReturn = element[index].getAttribute('data-video-src');
             element[index].classList.add('activeCurrent');
-            this.songCurrentName = element[index].querySelector('.song-name').innerHTML.replace(/\.[^/.]+$/, "");
+            this.songCurrentName = element[index].querySelector('.song-name__span').innerHTML.replace(/\.[^/.]+$/, "");
 
         },
 
