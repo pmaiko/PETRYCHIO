@@ -1,5 +1,11 @@
 <template>
-    <div class="login player-styles" :style="`background-image: url(${$store.state.randomCover.images})`">
+    <div class="login player-styles">
+        <div class="cover" :style="`backgroundImage: url(${$store.state.randomCover ? $store.state.randomCover.images : 'covers/default.jpg'});
+        transform: scale(${1 + (array[6]/255)/3},${1 + (array[6]/255)/3})`">
+            <div class="buffer" >
+                <img src="../../assets/logo.png" alt="Y0pta">
+            </div>
+        </div>
         <transition name="fade">
             <loader v-show="isResult"></loader>
         </transition>
