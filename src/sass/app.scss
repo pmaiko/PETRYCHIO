@@ -2,7 +2,9 @@
 @import "module/animation";
 @import "module/loader";
 @import "module/scroll";
-
+.cursor-pointer {
+  cursor: pointer;
+}
 $wite: #fff;
 $menutext: #212529;
 $font1: 'Raleway', sans-serif;

@@ -1,41 +1,44 @@
 <template>
-    <div class="login player-styles">
-        <div class="cover" :style="`backgroundImage: url(${$store.state.randomCover ? $store.state.randomCover.images : 'covers/default.jpg'});
-        transform: scale(${1 + (array[6]/255)/3},${1 + (array[6]/255)/3})`">
-            <div class="buffer" >
-                <img src="../../assets/logo.png" alt="Y0pta">
-            </div>
-        </div>
+    <div class="player-styles">
         <transition name="fade">
             <loader v-show="isResult"></loader>
         </transition>
-        <!--<canvas class="canvas"></canvas>-->
         <div class="top__panel">
             <div class="block__right">
                 <div class="user__name">
-                    Петя Майко
+                    {{$store.state.authUser[4]}} {{$store.state.authUser[5]}}
                 </div>
                 <div class="user__photo">
-                    <img src="../../assets/logo.png" alt="" width="30px" height="30px">
+                    <img :src="`${$store.state.authUser[6] ? $store.state.authUser[6] : 'default/user-icon-default.png'}`" alt="user-photo">
                 </div>
-                <div class="open__player"
+                <div class="ml-4 open__player"
                      @click="isShowPlayer = !isShowPlayer">
-                    Knopka
+                    <span>Открыть плеер</span>
+                    <i class="fa fa-music" aria-hidden="true"></i>
                 </div>
-
-                <b-button variant="outline-primary" class="s" v-b-modal.modal2>
-                    <span>Загурузить подложки</span>
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                </b-button>
-
             </div>
             <div class="block__right">
-                <div class="log__out"
-                     @click="logOut">
+                <div class="log__out cursor-pointer" @click="logOut">
+                    <div class="log__out--icon mr-1"></div>
+                    <span>Выйти</span>
                 </div>
             </div>
         </div>
-        <transition name="fade">
+        <!--<div class="cover" :style="`backgroundImage: url(${$store.state.randomCover ? $store.state.randomCover.images : 'default/cover-default.jpg'});-->
+        <!--transform: scale(${1 + backgroundArray[0]}, ${1 + backgroundArray[0]})`">-->
+            <!--<div class="buffer" >-->
+                <!--<img src="../../assets/logo.png" alt="Y0pta">-->
+            <!--</div>-->
+        <!--</div>-->
+        <canvas class="cover">
+            <div class="buffer" >
+                <img src="../../assets/logo.png" alt="Y0pta">
+            </div>
+        </canvas>
+        <b-link class="download-cover" v-b-modal.modal2>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </b-link>
+        <transition name="top">
             <div class="player" v-show="isShowPlayer">
                 <div class="block__visualizer">
                     <div class="visualizer">
@@ -48,7 +51,7 @@
                              :class="{'click': songRepeat}"
                              @click="songRepeat = !songRepeat"
                         >
-                            <i class="fas fa-redo"></i>
+                            <i class="fa fa-repeat" aria-hidden="true"></i>
                         </div>
                         <div class="time">{{songCurrentTime}}</div>
                     </div>
@@ -74,10 +77,9 @@
                     </div>
                     <div class="block-rig">
                         <div class="mute">
-                            <i class="fas fa-volume-up"
+                            <i class="fa fa-volume-up" aria-hidden="true"
                                :class="{'d-none':volumeValue === '0'}"></i>
-                            <i class="fa fa-volume-off d-none"
-                               aria-hidden="true"
+                            <i class="fa fa-volume-off d-none" aria-hidden="true"
                                :class="{'d-flex':volumeValue === '0'}"></i>
                         </div>
                         <input type="range" class="volume" min="0" max="100" v-model="volumeValue">
@@ -117,8 +119,8 @@
             <transition name="fade">
                 <div class="list" v-show="togglePlayList">
                     <b-button variant="outline-primary" class="playList__panel-button-load" v-b-modal.modal1>
-                        <span>download file</span>
-                        <i class="fa fa-download" aria-hidden="true"></i>
+                        <span>Загрузить музыку</span>
+                        <i class="fa fa-cloud-download" aria-hidden="true"></i>
                     </b-button>
                     <loader v-show="result === ''"></loader>
                     <template>
@@ -137,7 +139,7 @@
                                      @click="trackDelete($event)"
                                 >
                                     <i class="fa fa-times" aria-hidden="true"></i></div>
-                                <a :href="item.Song" download><div class="download"><i class="fa fa-cloud-download" aria-hidden="true"></i></div></a>
+                                <a :href="item.Song" download><div class="download"><i class="fa fa-download" aria-hidden="true"></i></div></a>
                             </div>
                         </div>
                     </template>
@@ -176,10 +178,12 @@
     export default {
         data() {
             return {
+                img: new Image(),
                 togglePlayList: false,
                 songCurrentName: 'Song Name',
                 clickCurrentPlaySongEvent: '',
                 isShowPlayer: false,
+                backgroundArray: [],
                 result: '',
                 isResult: true,
                 count: 1,
@@ -191,6 +195,7 @@
                 srcPlay: '',
                 clickSrc: '',
                 srcId: -1,
+                songPlay: false,
 
                 elementsPosts: '',
                 lengthAllTracks: 0,
@@ -324,6 +329,9 @@
 
 
             playSong(e) {
+                this.songPlay = true;
+                this.drawVisualizerInPlayer();
+                this.drawFon();
                 this.clickCurrentPlaySongEvent = e.currentTarget;
                 this.songCurrentName = e.currentTarget.querySelector('.song-name__span').innerHTML.replace(/\.[^/.]+$/, "");
                 this.iconActiveMainPlay = true;
@@ -344,6 +352,7 @@
                     }
                     else {
                         this.song.pause();
+                        this.songPlay = false;
                         e.currentTarget.classList.add('activeCurrentPaused');
 
                     }
@@ -357,6 +366,9 @@
             },
 
             playTrack() {
+                this.songPlay = true;
+                this.drawVisualizerInPlayer();
+                this.drawFon();
                 this.removeActiveCurrentClass();
                 this.iconActiveMainPlay = !this.iconActiveMainPlay;
                 if(this.srcId < 0) {
@@ -376,6 +388,7 @@
                     }
                     else {
                         this.song.pause();
+                        this.songPlay = false;
                         this.selectSrcActiveCurrentPaused(this.srcId);
                         this.clickCurrentPlaySongEvent.classList.add('activeCurrentPaused');
                     }
@@ -435,7 +448,10 @@
                     let mouseMoveLeft = e.pageX - (rob -9);
                     mouseMoveLeft = ((mouseMoveLeft*100)/e.currentTarget.offsetWidth);
                     const progress = this.$el.querySelector(".progress");
-                    progress.style.cssText = 'width:'+mouseMoveLeft+'%';
+
+                    if (mouseMoveLeft<=100) {
+                        progress.style.cssText = 'width:'+mouseMoveLeft+'%';
+                    }
 
                     this.setSec = ((mouseMoveLeft)* this.song.duration)/100;
                     let timesec = parseInt(this.setSec%60);
@@ -467,10 +483,12 @@
 
             visuallizer() {
                 this.analyser = this.audioCtx.createAnalyser();
+                //this.analyser.type = "peaking";
+                // this.analyser.frequency.value = 2000;
                 this.analyser.fftSize = 1024;
-                this.analyser.minDecibels = -70;
-                this.analyser.maxDecibels = -30;
-                this.analyser.smoothingTimeConstant = 0;
+                //this.analyser.minDecibels = -70;
+                //this.analyser.maxDecibels = -30;
+                //this.analyser.smoothingTimeConstant = 0.85;
                 this.source = this.audioCtx.createMediaElementSource(this.song);
                 this.source.connect(this.analyser);
                 this.analyser.connect(this.audioCtx.destination);
@@ -489,7 +507,7 @@
                 }
                 // console.log(this.analyser);
                 this.visualizerMinValue = 2;
-                this.analyser.getByteFrequencyData(this.array);
+                //this.analyser.getFloatTimeDomainData()(this.array);
             },
 
             // isCanvas() {
@@ -539,6 +557,91 @@
             //     run();
             //
             // }
+
+            drawImageCoverEffect(ctx, img, x, y, w, h, offsetX, offsetY) {
+                if (arguments.length === 2) {
+                    x = y = 0;
+                    w = ctx.canvas.width;
+                    h = ctx.canvas.height;
+                }
+
+                // default offset is center
+                offsetX = typeof offsetX === "number" ? offsetX : 0.5;
+                offsetY = typeof offsetY === "number" ? offsetY : 0.5;
+
+                // keep bounds [0.0, 1.0]
+                if (offsetX < 0) offsetX = 0;
+                if (offsetY < 0) offsetY = 0;
+                if (offsetX > 1) offsetX = 1;
+                if (offsetY > 1) offsetY = 1;
+
+                let iw = img.width,
+                    ih = img.height,
+                    r = Math.min(w / iw, h / ih),
+                    nw = iw * r,   // new prop. width
+                    nh = ih * r,   // new prop. height
+                    cx, cy, cw, ch, ar = 1;
+
+                // decide which gap to fill
+                if (nw < w) ar = w / nw;
+                if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
+                nw *= ar;
+                nh *= ar;
+
+                // calc source rectangle
+                cw = iw / (nw / w);
+                ch = ih / (nh / h);
+
+                cx = (iw - cw) * offsetX;
+                cy = (ih - ch) * offsetY;
+
+                // make sure source rectangle is valid
+                if (cx < 0) cx = 0;
+                if (cy < 0) cy = 0;
+                if (cw > iw) cw = iw;
+                if (ch > ih) ch = ih;
+
+                // fill image in dest. rectangle
+                ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
+            },
+
+            drawFon() {
+                const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+                let array;
+                array = new Uint8Array(this.analyser.frequencyBinCount);
+                this.analyser.getByteFrequencyData(array)
+                const canvas = document.querySelector('.cover');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                const ctx = canvas.getContext('2d');
+                this.drawImageCoverEffect(ctx, this.img, -(array[0]*2)/2, -(array[0]*2)/2, width+((array[0]*2)), height+((array[0]*2)));
+
+                if(this.songPlay) {
+                    requestAnimationFrame(this.drawFon);
+                }
+            },
+
+            drawVisualizerInPlayer() {
+                const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+                this.analyser.getByteFrequencyData(this.array);
+                for (let i=0; i < this.array.length - 10; i++) {
+                    if (this.array[i] < this.visualizerMinValue) {
+                        this.arrayClassEv[i].style.cssText = 'height:'+this.visualizerMinValue+'px';
+                    }
+
+                    else {
+                        let array = this.array[i] - ((this.array[i]*20)/100);
+                        this.arrayClassEv[i].style.cssText = 'height:'+array+'px';
+                    }
+                }
+                if(this.songPlay) {
+                    requestAnimationFrame(this.drawVisualizerInPlayer);
+                }
+
+            }
         },
         beforeCreate() {
             if (this.$cookie.get('login') === null) {
@@ -551,8 +654,20 @@
             this.$store.dispatch('selectPic',this.$cookie.get('user_id'));
         },
         mounted() {
-          this.visuallizer();
-          // this.isCanvas();
+            const s = this;
+            this.visuallizer();
+            this.img.src = `${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'}`;
+            this.backgroundArray[0] = 0;
+            this.img.onload = function () {
+                s.drawFon();
+            };
+
+            window.onresize = function() {
+                s.drawFon();
+            };
+            this.drawVisualizerInPlayer();
+            // this.isCanvas();
+
         },
 
         computed: {
@@ -613,18 +728,6 @@
                         element.style.cssText = 'width:'+(current - 100)+'%';
                     }
                     // visualizer
-                    s.analyser.getByteFrequencyData(s.array);
-                    for (let i=0; i < s.array.length - 10; i++) {
-                        if (s.array[i] < s.visualizerMinValue) {
-                            s.arrayClassEv[i].style.cssText = 'height:'+s.visualizerMinValue+'px';
-                        }
-
-                        else {
-                            let array = s.array[i] - ((s.array[i]*20)/100);
-                            s.arrayClassEv[i].style.cssText = 'height:'+array+'px';
-                        }
-                    }
-
                     //canvas
                     //s.analyser.frequencyBinCount
                         //s.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);

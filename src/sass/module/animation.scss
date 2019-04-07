@@ -4,3 +4,12 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
   opacity: 0;
 }
+
+.top-enter-active, .top-leave-active {
+  transition: all 1s ease-in-out;
+  top: 35px;
+}
+.top-enter, .top-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  transition: all 1s ease-in-out;
+  top: -100%;
+}
