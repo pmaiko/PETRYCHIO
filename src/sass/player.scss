@@ -35,7 +35,43 @@ $height-top-menu: calc(100vh - 35px);
       width: 100%;
     }
   }
+
+  &__visualizer {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &-item {
+      position: absolute;
+      top: -20px;
+      left: 99px;
+      height: 19px;
+      width: 2px;
+      transform-origin: 50% 630% 0;
+      background-color:  red;
+
+      //position: absolute;
+      //top: -80px;
+      //left: 100px;
+      //height: 2px;
+      //width: 2px;
+      //transform-origin: 0 180% 0;
+      //background: yellow;
+
+      //position: absolute;
+      //top: 100px;
+      //left: 98px;
+      //height: 2px;
+      //width: 1px;
+      //transform-origin: top;
+      //background: red;
+    }
+  }
 }
+
 
 
 .top__panel {

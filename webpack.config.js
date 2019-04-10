@@ -75,7 +75,7 @@ module.exports = {
                     },
                 ],
             },
-        ]
+        ],
     },
     plugins: [
         new VueLoaderPlugin(),
@@ -90,8 +90,8 @@ module.exports = {
             template: './src/index.html',
             filename: './index.html'
         }),
-        // new CopyWebpackPlugin([
-        //     { from: './src/assets/images', to: './images' }
-        // ])
+        new CopyWebpackPlugin([
+            { from: './src/bootstrap', to: './' }
+        ])
     ]
 };

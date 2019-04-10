@@ -24,17 +24,19 @@
                 </div>
             </div>
         </div>
-        <!--<div class="cover" :style="`backgroundImage: url(${$store.state.randomCover ? $store.state.randomCover.images : 'default/cover-default.jpg'});-->
-        <!--transform: scale(${1 + backgroundArray[0]}, ${1 + backgroundArray[0]})`">-->
-            <!--<div class="buffer" >-->
-                <!--<img src="../../assets/logo.png" alt="Y0pta">-->
-            <!--</div>-->
-        <!--</div>-->
-        <canvas class="cover">
+        <div class="cover">
             <div class="buffer" >
                 <img src="../../assets/logo.png" alt="Y0pta">
             </div>
-        </canvas>
+            <div class="cover__visualizer">
+
+            </div>
+        </div>
+        <!--<canvas class="cover">-->
+            <!--<div class="buffer" >-->
+                <!--<img src="../../assets/logo.png" alt="Y0pta">-->
+            <!--</div>-->
+        <!--</canvas>-->
         <b-link class="download-cover" v-b-modal.modal2>
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         </b-link>
@@ -213,6 +215,8 @@
                 arrayClassEv: '',
                 visualizerMinValue: '',
                 array: [],
+                arrayFon: [],
+                arrayClassEvFon: '',
                 source: '',
 
                 // mute: false,
@@ -369,6 +373,7 @@
                 this.songPlay = true;
                 this.drawVisualizerInPlayer();
                 this.drawFon();
+                this.drawVisualizerInFon();
                 this.removeActiveCurrentClass();
                 this.iconActiveMainPlay = !this.iconActiveMainPlay;
                 if(this.srcId < 0) {
@@ -493,7 +498,6 @@
                 this.source.connect(this.analyser);
                 this.analyser.connect(this.audioCtx.destination);
 
-
                 this.array = new Uint8Array(this.analyser.frequencyBinCount);
                 for (let i=0; i<this.array.length -10; i++){
                     let block = document.querySelector('.visualizer');
@@ -508,6 +512,17 @@
                 // console.log(this.analyser);
                 this.visualizerMinValue = 2;
                 //this.analyser.getFloatTimeDomainData()(this.array);
+
+                // fon
+
+                this.arrayFon = new Uint8Array(360);
+                for (let i=0; i<this.arrayFon.length; i++){
+                    let block = document.querySelector('.cover__visualizer');
+                    let newBlock = document.createElement('div');
+                    newBlock.classList.add('cover__visualizer-item');
+                    block.appendChild(newBlock);
+                }
+                this.arrayClassEvFon = document.querySelectorAll('.cover__visualizer-item');
             },
 
             // isCanvas() {
@@ -558,69 +573,38 @@
             //
             // }
 
-            drawImageCoverEffect(ctx, img, x, y, w, h, offsetX, offsetY) {
-                if (arguments.length === 2) {
-                    x = y = 0;
-                    w = ctx.canvas.width;
-                    h = ctx.canvas.height;
-                }
-
-                // default offset is center
-                offsetX = typeof offsetX === "number" ? offsetX : 0.5;
-                offsetY = typeof offsetY === "number" ? offsetY : 0.5;
-
-                // keep bounds [0.0, 1.0]
-                if (offsetX < 0) offsetX = 0;
-                if (offsetY < 0) offsetY = 0;
-                if (offsetX > 1) offsetX = 1;
-                if (offsetY > 1) offsetY = 1;
-
-                let iw = img.width,
-                    ih = img.height,
-                    r = Math.min(w / iw, h / ih),
-                    nw = iw * r,   // new prop. width
-                    nh = ih * r,   // new prop. height
-                    cx, cy, cw, ch, ar = 1;
-
-                // decide which gap to fill
-                if (nw < w) ar = w / nw;
-                if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
-                nw *= ar;
-                nh *= ar;
-
-                // calc source rectangle
-                cw = iw / (nw / w);
-                ch = ih / (nh / h);
-
-                cx = (iw - cw) * offsetX;
-                cy = (ih - ch) * offsetY;
-
-                // make sure source rectangle is valid
-                if (cx < 0) cx = 0;
-                if (cy < 0) cy = 0;
-                if (cw > iw) cw = iw;
-                if (ch > ih) ch = ih;
-
-                // fill image in dest. rectangle
-                ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
-            },
-
             drawFon() {
                 const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
                 let array;
-                array = new Uint8Array(this.analyser.frequencyBinCount);
-                this.analyser.getByteFrequencyData(array)
-                const canvas = document.querySelector('.cover');
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                const element = document.querySelector(".cover");
                 const width = window.innerWidth;
                 const height = window.innerHeight;
-
-                const ctx = canvas.getContext('2d');
-                this.drawImageCoverEffect(ctx, this.img, -(array[0]*2)/2, -(array[0]*2)/2, width+((array[0]*2)), height+((array[0]*2)));
+                array = new Uint8Array(this.analyser.frequencyBinCount);
+                this.analyser.getByteFrequencyData(array);
+                element.style.cssText = `
+                background-image: url(${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'});
+                margin-left: ${-(array[0]*2)/2}px;
+                margin-top: ${-(array[0]*2)/2}px;
+                width: ${width + (array[0]*2)}px;
+                height: ${height+((array[0]*2))}px;
+                `;
 
                 if(this.songPlay) {
                     requestAnimationFrame(this.drawFon);
+                }
+            },
+
+            drawVisualizerInFon() {
+                const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+                this.analyser.getByteFrequencyData(this.arrayFon);
+                for (let i=0; i < this.arrayFon.length; i++) {
+                    let array = this.arrayFon[i] - ((this.arrayFon[i] * 20) / 100);
+                    this.arrayClassEvFon[i].style.cssText = `transform: rotate(${i}deg) translateY(${-this.arrayFon[i]}px)`;
+                    // this.arrayClassEvFon[i].style.cssText = `transform: rotate(${i}deg) translateY(100px); height: ${array}px;`
+                }
+                if(this.songPlay) {
+                    requestAnimationFrame(this.drawVisualizerInFon);
                 }
             },
 
@@ -636,7 +620,9 @@
                         let array = this.array[i] - ((this.array[i]*20)/100);
                         this.arrayClassEv[i].style.cssText = 'height:'+array+'px';
                     }
+
                 }
+
                 if(this.songPlay) {
                     requestAnimationFrame(this.drawVisualizerInPlayer);
                 }
@@ -665,6 +651,7 @@
             window.onresize = function() {
                 s.drawFon();
             };
+            this.drawVisualizerInFon();
             this.drawVisualizerInPlayer();
             // this.isCanvas();
 
