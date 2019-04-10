@@ -180,6 +180,7 @@
     export default {
         data() {
             return {
+                requestAnimationFrame: window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame,
                 img: new Image(),
                 togglePlayList: false,
                 songCurrentName: 'Song Name',
@@ -282,7 +283,6 @@
             },
 
             async uploadFiles () {
-                const s = this;
                 const data = new FormData(document.getElementById('uploadForm'));
                 const trackFiles = document.querySelector('#files');
                 data.append('user_id', this.$cookie.get('user_id'));
@@ -574,7 +574,6 @@
             // }
 
             drawFon() {
-                const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
                 let array;
                 const element = document.querySelector(".cover");
                 const width = window.innerWidth;
@@ -595,8 +594,6 @@
             },
 
             drawVisualizerInFon() {
-                const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
                 this.analyser.getByteFrequencyData(this.arrayFon);
                 for (let i=0; i < this.arrayFon.length; i++) {
                     let array = this.arrayFon[i] - ((this.arrayFon[i] * 20) / 100);
@@ -609,7 +606,6 @@
             },
 
             drawVisualizerInPlayer() {
-                const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
                 this.analyser.getByteFrequencyData(this.array);
                 for (let i=0; i < this.array.length - 10; i++) {
                     if (this.array[i] < this.visualizerMinValue) {
