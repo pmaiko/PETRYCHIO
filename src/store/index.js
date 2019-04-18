@@ -33,14 +33,16 @@ const store = new Vuex.Store({
             })
         },
 
-        selectPlaylist({commit}, cookieID) {
-            axios({
+        selectPlaylist({commit}, data) {
+            return axios({
                 method: 'post',
                 url: '/api/selectPlayList.php',
                 data: {
-                    user_id: cookieID,
+                    user_id: data.cookieID,
+                    limit: data.limitValue,
                 }
             }).then(function (dataOutINServer) {
+                console.log('nava');
                 const result = dataOutINServer.data;
                 commit('set', {type: 'playListUser', items: result});
             })

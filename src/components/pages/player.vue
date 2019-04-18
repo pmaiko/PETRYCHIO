@@ -180,11 +180,13 @@
     export default {
         data() {
             return {
+                limit: 15,
+                paginationVal: 5,
+                playListMaxCount: '',
                 requestAnimationFrame: window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame,
                 img: new Image(),
                 togglePlayList: false,
                 songCurrentName: 'Song Name',
-                clickCurrentPlaySongEvent: '',
                 isShowPlayer: false,
                 backgroundArray: [],
                 result: '',
@@ -313,7 +315,7 @@
                 const data = new FormData(document.getElementById('uploadCover'));
                 const imageFiles = document.querySelector('#filesImage');
                 data.append('user_id', this.$cookie.get('user_id'));
-                for (let i=0; i<imageFiles.files.length; i++) {
+                for (let i = 0; i < imageFiles.files.length; i++) {
                     data.append('file', imageFiles.files[i]);
 
                     await axios.post('/api/upload_pic.php', data, {
@@ -336,7 +338,6 @@
                 this.songPlay = true;
                 this.drawVisualizerInPlayer();
                 this.drawFon();
-                this.clickCurrentPlaySongEvent = e.currentTarget;
                 this.songCurrentName = e.currentTarget.querySelector('.song-name__span').innerHTML.replace(/\.[^/.]+$/, "");
                 this.iconActiveMainPlay = true;
                 this.removeActiveCurrentClass();
@@ -389,62 +390,89 @@
                 else {
                     if (this.song.paused) {
                         this.song.play();
-                        this.clickCurrentPlaySongEvent.classList.remove('activeCurrentPaused');
                     }
                     else {
                         this.song.pause();
                         this.songPlay = false;
                         this.selectSrcActiveCurrentPaused(this.srcId);
-                        this.clickCurrentPlaySongEvent.classList.add('activeCurrentPaused');
                     }
                 }
             },
-            nextTrack() {
+            async nextTrack() {
                 this.removeActiveCurrentClass();
                 this.iconActiveMainPlay = true;
                 this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
-                if (this.clickSrc !== '') { //если была нажата кнопка play
-                    if (this.srcId > this.lengthAllTracks - 2) {
-                        this.srcId = -1;
-                    }
-                    this.selectSrc(this.srcId + 1);
-                    this.funSelTrack();
-                    this.srcId++;
+                if (this.srcId > this.lengthAllTracks - 2 && this.limit < this.playListMaxCount) {
+                    this.$store.dispatch('selectPlaylist', {cookieID: this.$cookie.get('user_id'), limitValue: this.limit+=this.paginationVal}).then(
+                        response => {
+                            this.selectSrc(this.srcId + 1);
+                            this.funSelTrack();
+                            this.srcId++;
+                        }
+                    );
                 }
                 else {
-                    this.srcId++;
-                    if(this.srcId > this.lengthAllTracks - 1) {
-                        this.srcId = 0;
+                    if (this.clickSrc !== '') { //если была нажата кнопка play
+                        if (this.srcId > this.lengthAllTracks - 2) {
+                            this.srcId = -1;
+                        }
+
+                        this.selectSrc(this.srcId + 1);
+                        this.funSelTrack();
+                        this.srcId++;
                     }
-                    this.selectSrc(this.srcId);
-                    this.funSelTrack();
-                    this.clickSrc = this.srcReturn;
+                    else {
+                        this.srcId++;
+                        if(this.srcId > this.lengthAllTracks - 1) {
+                            this.srcId = 0;
+                        }
+
+                        this.selectSrc(this.srcId);
+                        this.funSelTrack();
+                        this.clickSrc = this.srcReturn;
+                    }
                 }
+
             },
 
             prevTrack() {
-                this.removeActiveCurrentClass();
-                this.iconActiveMainPlay = true;
-                this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
-                if (this.clickSrc !== '') { //если была нажата кнопка play
-                    if (this.srcId < 1) {
-                        this.srcId = this.lengthAllTracks;
-                    }
+                    this.removeActiveCurrentClass();
+                    this.iconActiveMainPlay = true;
+                    //this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
 
-                    this.selectSrc(this.srcId - 1);
-                    this.funSelTrack();
-                    this.srcId--;
-                }
-                else {
-                    this.srcId--;
                     if(this.srcId < 1) {
-                        this.srcId = this.lengthAllTracks - 1;
+                        this.$store.dispatch('selectPlaylist', {
+                            cookieID: this.$cookie.get('user_id'),
+                            limitValue: this.playListMaxCount})
+                            .then(response => {
+                                this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
+                                this.srcId = this.lengthAllTracks;
+                                this.srcId--;
+                                this.selectSrc(this.srcId);
+                                this.funSelTrack();
+                                this.clickSrc = this.srcReturn;
+                                this.limit = this.playListMaxCount;
+                            });
+                    }
+                    else {
+                        if (this.clickSrc !== '') { //если была нажата кнопка play
+                            console.log('lox');
+                            this.selectSrc(this.srcId - 1);
+                            this.funSelTrack();
+                            this.srcId--;
+
+                        }
+
+                        else {
+
+                            this.srcId--;
+                            this.selectSrc(this.srcId);
+                            this.funSelTrack();
+                            this.clickSrc = this.srcReturn;
+                        }
                     }
 
-                    this.selectSrc(this.srcId);
-                    this.funSelTrack();
-                    this.clickSrc = this.srcReturn;
-                }
+
             },
 
             goToTime(e) {
@@ -525,54 +553,6 @@
                 this.arrayClassEvFon = document.querySelectorAll('.cover__visualizer-item');
             },
 
-            // isCanvas() {
-            //     const c = document.querySelector(".canvas");
-            //     // c.width = window.innerWidth;
-            //     // c.height = window.innerHeight;
-            //     this.ctx = c.getContext("2d");
-            //     let s = this;
-            //     function col(r, g, b) {
-            //         s.ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-            //         s.ctx.fillRect(0, 0, window.innerWidth,window.innerHeight);
-            //     }
-            //     function R(x, y, t) {
-            //         return( Math.floor(192 + 64*Math.cos( (x*x-y*y)/300 + t )) );
-            //     }
-            //
-            //     function G(x, y, t) {
-            //         return( Math.floor(192 + 64*Math.sin( (x*x*Math.cos(t/4)+y*y*Math.sin(t/3))/300 ) ) );
-            //     }
-            //
-            //     function B(x, y, t) {
-            //         // console.log(Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-100)*(x-100)+(y-100)*(y-100))/1100) ));
-            //         return( Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-100)*(x-100)+(y-100)*(y-100))/1100) ));
-            //     }
-            //     // function getRandom(max,min) {
-            //     //     return Math.random() * (max - min) + min;
-            //     // }
-            //     //
-            //     // function R(x,y,t) {
-            //     //     return(getRandom(255-t, 0));
-            //     // }
-            //     //
-            //     // function G(x,y,t) {
-            //     //     return(getRandom(255-t, 0));
-            //     // }
-            //     //
-            //     // function B(x,y,t) {
-            //     //     return(getRandom(255-t, 0));
-            //     // }
-            //     let t = 0;
-            //     function run () {
-            //         col(R(1,1,t), G(1,1,t), B(1,1,t));
-            //         t = t + .009;
-            //         window.requestAnimationFrame(run);
-            //     }
-            //
-            //     run();
-            //
-            // }
-
             drawFon() {
                 let array;
                 const element = document.querySelector(".cover");
@@ -623,7 +603,18 @@
                     requestAnimationFrame(this.drawVisualizerInPlayer);
                 }
 
-            }
+            },
+            scrollPlayList() {
+                const element = document.querySelector('.list');
+                element.onscroll = () => {
+                    let tmp = element.scrollHeight - element.scrollTop;
+                    // console.log(Math.round(tmp),'tmp');
+                    // console.log(element.clientHeight + 100,'d');
+                    if (Math.round(tmp) === element.clientHeight && this.limit < this.playListMaxCount) {
+                        this.$store.dispatch('selectPlaylist', {cookieID: this.$cookie.get('user_id'), limitValue: this.limit+=this.paginationVal});
+                    }
+                }
+            },
         },
         beforeCreate() {
             if (this.$cookie.get('login') === null) {
@@ -632,10 +623,12 @@
         },
 
         created() {
-            this.$store.dispatch('selectPlaylist',this.$cookie.get('user_id'));
+            this.$store.dispatch('selectPlaylist', {cookieID: this.$cookie.get('user_id'), limitValue: this.limit});
             this.$store.dispatch('selectPic',this.$cookie.get('user_id'));
         },
         mounted() {
+            this.scrollPlayList();
+
             const s = this;
             this.visuallizer();
             this.img.src = `${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'}`;
@@ -649,14 +642,14 @@
             };
             this.drawVisualizerInFon();
             this.drawVisualizerInPlayer();
-            // this.isCanvas();
 
         },
 
         computed: {
             isPlayList() {
                 if (this.$store.state.playListUser) {
-                    this.result = this.$store.state.playListUser;
+                    this.result = this.$store.state.playListUser.playList;
+                    this.playListMaxCount = this.$store.state.playListUser.maxCount.maxCount;
                     this.isResult = false;
 
                     this.$nextTick(() => {
@@ -710,20 +703,12 @@
                         const element = s.$el.querySelector(".progress");
                         element.style.cssText = 'width:'+(current - 100)+'%';
                     }
-                    // visualizer
-                    //canvas
-                    //s.analyser.frequencyBinCount
-                        //s.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-                    //s.ctx.fillStyle = 'red';
-                    // for (let i=0; i < s.array.length - 10; i++) {
-                    //     s.ctx.fillStyle = 'rgb(' + s.array[i] + ',50,50)';
-                    //     s.ctx.fillRect(window.innerWidth/2,window.innerHeight/2,s.array[i],s.array[i]);
-                    // }
                 }
             },
         },
 
         watch: {
+            //scrollPlayList() {},
             isPlayList () {},
             currentTimeOut() {},
             isVolume() {},

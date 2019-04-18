@@ -2,7 +2,7 @@
     <div class="login player-styles">
         <div class="login_wrap">
             <h1 style="text-align: center">#Autorisation</h1>
-            <form name="person">
+            <div name="person">
                 <label for="login">Login</label>
                 <input type="text" placeholder="admin" id="login" v-model="auth.login">
                 <label for="password">Password</label>
@@ -11,7 +11,7 @@
                     <button type="submit" @click="postForm">Login</button>
                 </div>
                 <router-link to="/registration">REG</router-link>
-            </form>
+            </div>
         </div>
         <div class="login_logo">
             <h2>IMMORTAL</h2><span>MP3</span><h2>player</h2>
@@ -37,6 +37,7 @@
         computed: {
             fun() {
                 if (this.$store.state.authUser[0] === 'userLoginEd') {
+                    console.log('lox');
                     this.$cookie.set('login', this.$store.state.authUser[1], 100);
                     this.$cookie.set('password', this.$store.state.authUser[2], 100);
                     this.$cookie.set('user_id', this.$store.state.authUser[3], 100);
