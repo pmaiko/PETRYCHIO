@@ -436,41 +436,44 @@
             },
 
             prevTrack() {
-                    this.removeActiveCurrentClass();
-                    this.iconActiveMainPlay = true;
-                    //this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
-
-                    if(this.srcId < 1) {
-                        this.$store.dispatch('selectPlaylist', {
-                            cookieID: this.$cookie.get('user_id'),
-                            limitValue: this.playListMaxCount})
-                            .then(response => {
-                                this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
-                                this.srcId = this.lengthAllTracks;
-                                this.srcId--;
-                                this.selectSrc(this.srcId);
-                                this.funSelTrack();
-                                this.clickSrc = this.srcReturn;
-                                this.limit = this.playListMaxCount;
-                            });
-                    }
-                    else {
-                        if (this.clickSrc !== '') { //если была нажата кнопка play
-                            console.log('lox');
-                            this.selectSrc(this.srcId - 1);
-                            this.funSelTrack();
-                            this.srcId--;
-
-                        }
-
-                        else {
-
+                this.removeActiveCurrentClass();
+                this.iconActiveMainPlay = true;
+                //this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
+                if(this.srcId < 1 && this.lengthAllTracks === 0) {
+                    this.$store.dispatch('selectPlaylist', {
+                        cookieID: this.$cookie.get('user_id'),
+                        limitValue: this.playListMaxCount})
+                        .then(response => {
+                            this.lengthAllTracks = parseInt(this.$el.querySelectorAll('.post').length);
+                            this.srcId = this.lengthAllTracks;
                             this.srcId--;
                             this.selectSrc(this.srcId);
                             this.funSelTrack();
                             this.clickSrc = this.srcReturn;
+                            this.limit = this.playListMaxCount;
+                        });
+                }
+                else {
+                    if (this.clickSrc !== '') { //если была нажата кнопка play
+                        if (this.srcId < 1) {
+                            this.srcId = this.lengthAllTracks;
                         }
+
+                        this.selectSrc(this.srcId - 1);
+                        this.funSelTrack();
+                        this.srcId--;
                     }
+                    else {
+                        this.srcId--;
+                        if(this.srcId < 1) {
+                            this.srcId = this.lengthAllTracks - 1;
+                        }
+
+                        this.selectSrc(this.srcId);
+                        this.funSelTrack();
+                        this.clickSrc = this.srcReturn;
+                    }
+                }
 
 
             },
@@ -612,6 +615,10 @@
                     // console.log(element.clientHeight + 100,'d');
                     if (Math.round(tmp) === element.clientHeight && this.limit < this.playListMaxCount) {
                         this.$store.dispatch('selectPlaylist', {cookieID: this.$cookie.get('user_id'), limitValue: this.limit+=this.paginationVal});
+                    }
+
+                    if(this.limit >= this.playListMaxCount) {
+                        this.lengthAllTracks = this.playListMaxCount;
                     }
                 }
             },
