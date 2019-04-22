@@ -25,12 +25,16 @@
             </div>
         </div>
         <div class="cover">
+            <div class="cover__visualizer">
+            </div>
             <div class="buffer" >
                 <img src="../../assets/logo.png" alt="Y0pta">
             </div>
-            <div class="cover__visualizer">
-
-            </div>
+        </div>
+        <div class="stars">
+            <div id="stars1"></div>
+            <div id="stars2"></div>
+            <div id="stars3"></div>
         </div>
         <!--<canvas class="cover">-->
             <!--<div class="buffer" >-->
@@ -218,13 +222,15 @@
                 arrayClassEv: '',
                 visualizerMinValue: '',
                 array: [],
-                arrayFon: [],
                 arrayClassEvFon: '',
                 source: '',
 
                 // mute: false,
                 // volume: 100,
                 // vol: '',
+
+                widthBuffer: '',
+                heightBuffer: '',
 
                 handle: '',
                 id_song: '',
@@ -262,10 +268,14 @@
                     span.forEach((item) =>{
                         let text = item.innerHTML;
                         if (item.offsetWidth > name.offsetWidth ) {
-                            setInterval(() => {
+                            let f = () =>{
                                 text = text[text.length - 1] + text.substring(0, text.length - 1);
                                 item.innerHTML = text;
-                            }, 200)
+                                setTimeout(() => {
+                                    requestAnimationFrame(f);
+                                }, 100);
+                            };
+                            f();
                         }
                     });
                 });
@@ -546,8 +556,8 @@
 
                 // fon
 
-                this.arrayFon = new Uint8Array(360);
-                for (let i=0; i<this.arrayFon.length; i++){
+                // this.arrayFon = new Uint8Array(360);
+                for (let i=0; i<this.array.length; i++){
                     let block = document.querySelector('.cover__visualizer');
                     let newBlock = document.createElement('div');
                     newBlock.classList.add('cover__visualizer-item');
@@ -557,19 +567,23 @@
             },
 
             drawFon() {
-                let array;
                 const element = document.querySelector(".cover");
+                const buffer = document.querySelector(".buffer");
+
                 const width = window.innerWidth;
                 const height = window.innerHeight;
-                array = new Uint8Array(this.analyser.frequencyBinCount);
-                this.analyser.getByteFrequencyData(array);
+                const indexArray  = 0;
+                const reduce = 1.5;
+                this.analyser.getByteFrequencyData(this.array);
                 element.style.cssText = `
                 background-image: url(${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'});
-                margin-left: ${-(array[0]*2)/2}px;
-                margin-top: ${-(array[0]*2)/2}px;
-                width: ${width + (array[0]*2)}px;
-                height: ${height+((array[0]*2))}px;
+                margin-left: ${-((this.array[indexArray]/reduce)*2)/2}px;
+                margin-top: ${-((this.array[indexArray]/reduce)*2)/2}px;
+                width: ${width + ((this.array[indexArray]/reduce)*2)}px;
+                height: ${height+(((this.array[indexArray]/reduce)*2))}px;
                 `;
+
+                buffer.style.cssText = `width: ${this.widthBuffer + this.array[1]/4}px;  height: ${this.heightBuffer + this.array[1]/4}px;`;
 
                 if(this.songPlay) {
                     requestAnimationFrame(this.drawFon);
@@ -577,11 +591,20 @@
             },
 
             drawVisualizerInFon() {
-                this.analyser.getByteFrequencyData(this.arrayFon);
-                for (let i=0; i < this.arrayFon.length; i++) {
-                    let array = this.arrayFon[i] - ((this.arrayFon[i] * 20) / 100);
-                    this.arrayClassEvFon[i].style.cssText = `transform: rotate(${i}deg) translateY(${-this.arrayFon[i]}px)`;
-                    // this.arrayClassEvFon[i].style.cssText = `transform: rotate(${i}deg) translateY(100px); height: ${array}px;`
+                // getByteTimeDomainData
+                this.analyser.getByteFrequencyData(this.array);
+                let period = 360 / this.analyser.frequencyBinCount;
+                let t=period;
+                for (let i = 0; i < this.array.length; i++) {
+                    //let array = this.arrayFon[i] - ((this.arrayFon[i] * 20) / 100);
+                    // this.arrayClassEvFon[i].style.cssText = `transform: rotate(${t}deg) translateY(${-this.array[i]/2}px)`;
+                    if (i<=360) {
+                        this.arrayClassEvFon[i].style.cssText = `transform: rotate(${i}deg) translateY(100px); height: ${this.array[i]}px`;
+                    }
+                    else {
+                        this.arrayClassEvFon[i].style.cssText = `display: none`;
+                    }
+                    t=t+period;
                 }
                 if(this.songPlay) {
                     requestAnimationFrame(this.drawVisualizerInFon);
@@ -615,6 +638,7 @@
                     // console.log(element.clientHeight + 100,'d');
                     if (Math.round(tmp) === element.clientHeight && this.limit < this.playListMaxCount) {
                         this.$store.dispatch('selectPlaylist', {cookieID: this.$cookie.get('user_id'), limitValue: this.limit+=this.paginationVal});
+                        this.runText();
                     }
 
                     if(this.limit >= this.playListMaxCount) {
@@ -634,6 +658,10 @@
             this.$store.dispatch('selectPic',this.$cookie.get('user_id'));
         },
         mounted() {
+            const buffer = document.querySelector(".buffer");
+            this.widthBuffer = buffer.clientWidth;
+            this.heightBuffer = buffer.clientHeight;
+
             this.scrollPlayList();
 
             const s = this;
@@ -659,19 +687,20 @@
                     this.playListMaxCount = this.$store.state.playListUser.maxCount.maxCount;
                     this.isResult = false;
 
-                    this.$nextTick(() => {
-                        let name = document.querySelector('.song-name');
-                        let span = document.querySelectorAll('.song-name__span');
-                        span.forEach((item) =>{
-                            let text = item.innerHTML;
-                            if (item.offsetWidth > name.offsetWidth ) {
-                                setInterval(() => {
-                                    text = text[text.length - 1] + text.substring(0, text.length - 1);
-                                    item.innerHTML = text;
-                                }, 200)
-                            }
-                        });
-                    });
+                    // this.$nextTick(() => {
+                    //     let name = document.querySelector('.song-name');
+                    //     let span = document.querySelectorAll('.song-name__span');
+                    //     span.forEach((item) =>{
+                    //         let text = item.innerHTML;
+                    //         if (item.offsetWidth > name.offsetWidth ) {
+                    //             lox = () => {
+                    //                 text = text[text.length - 1] + text.substring(0, text.length - 1);
+                    //                 item.innerHTML = text;
+                    //             }
+                    //         }
+                    //         //requestAnimationFrame(lox);
+                    //     });
+                    // });
                 }
             },
 

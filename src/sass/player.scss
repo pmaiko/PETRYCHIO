@@ -10,6 +10,12 @@ $height-top-menu: calc(100vh - 35px);
   right: 45px;
   top: 65px;
 }
+.stars {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 .cover {
   top: 0;
   width: 100%;
@@ -41,16 +47,19 @@ $height-top-menu: calc(100vh - 35px);
     height: 200px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) rotate(-30deg);
 
     &-item {
       position: absolute;
-      top: -20px;
+      top: 100px;
       left: 99px;
       height: 19px;
-      width: 2px;
-      transform-origin: 50% 630% 0;
-      background-color:  red;
+      width: 1px;
+      border: 1px solid;
+      //border-left: 1px d;
+      //transform-origin: 50% 630% 0;
+      transform-origin: top;
+      background-color:  transparent;
 
       //position: absolute;
       //top: -80px;
