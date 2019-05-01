@@ -1,129 +1,40 @@
 <template>
-    <div class="player-styles">
-        <transition name="fade">
-            <loader v-show="isResult"></loader>
-        </transition>
-        <div class="top__panel">
-            <div class="block__right">
-                <div class="user__name">
-                    {{$store.state.authUser[4]}} {{$store.state.authUser[5]}}
-                </div>
-                <div class="user__photo">
-                    <img :src="`${$store.state.authUser[6] ? $store.state.authUser[6] : 'default/user-icon-default.png'}`" alt="user-photo">
-                </div>
-                <div class="ml-4 open__player"
-                     @click="isShowPlayer = !isShowPlayer">
-                    <span>Открыть плеер</span>
-                    <i class="fa fa-music" aria-hidden="true"></i>
-                </div>
-            </div>
-            <div class="block__right">
-                <div class="log__out cursor-pointer" @click="logOut">
-                    <div class="log__out--icon mr-1"></div>
-                    <span>Выйти</span>
-                </div>
-            </div>
-        </div>
-        <div class="cover">
-            <div class="cover__visualizer">
-            </div>
-            <div class="buffer" >
-                <img src="../../assets/logo.png" alt="Y0pta">
-            </div>
-        </div>
-        <div class="stars">
-            <div id="stars1"></div>
-            <div id="stars2"></div>
-            <div id="stars3"></div>
-        </div>
-        <!--<canvas class="cover">-->
-            <!--<div class="buffer" >-->
-                <!--<img src="../../assets/logo.png" alt="Y0pta">-->
-            <!--</div>-->
-        <!--</canvas>-->
-        <b-link class="download-cover" v-b-modal.modal2>
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-        </b-link>
-        <transition name="top">
-            <div class="player" v-show="isShowPlayer">
-                <div class="block__visualizer">
-                    <div class="visualizer">
-                    </div>
-                </div>
-                <div class="nameSong">{{ songCurrentName }}</div>
-                <div class="control">
-                    <div class="block-lef">
-                        <div class="repeat"
-                             :class="{'click': songRepeat}"
-                             @click="songRepeat = !songRepeat"
-                        >
-                            <i class="fa fa-repeat" aria-hidden="true"></i>
-                        </div>
-                        <div class="time">{{songCurrentTime}}</div>
-                    </div>
-                    <div class="block-cen">
-                        <div class="prev"
-                             @click="prevTrack($event)">
-                            <i class="fa fa-backward" aria-hidden="true"></i>
-                        </div>
-                        <div class="play-pause"
-                             :class="{'d-none': iconActiveMainPlay}"
-                             @click="playTrack">
-                            <i class="fa fa-play" aria-hidden="true"></i>
-                        </div>
-                        <div class="pause"
-                             @click="playTrack"
-                             :class="{'d-none': !iconActiveMainPlay}">
-                            <i class="fa fa-pause" aria-hidden="true"></i>
-                        </div>
-                        <div class="next"
-                             @click="nextTrack($event)">
-                            <i class="fa fa-forward" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div class="block-rig">
-                        <div class="mute">
-                            <i class="fa fa-volume-up" aria-hidden="true"
-                               :class="{'d-none':volumeValue === '0'}"></i>
-                            <i class="fa fa-volume-off d-none" aria-hidden="true"
-                               :class="{'d-flex':volumeValue === '0'}"></i>
-                        </div>
-                        <input type="range" class="volume" min="0" max="100" v-model="volumeValue">
-                    </div>
-                </div>
-                <div class="timetobar">
-
-                    <div class="setTime"
-                         :class="{'d-flex': songMouseHoverTime,
-                     'd-none': !songMouseHoverTime}">
-                        {{ songMouseHoverTimeOut }}
-                    </div>
-                    <div class="range"
-                         @mouseenter="goToTimeMouseOverEnter"
-                         @mousemove="goToTime($event)"
-                         @click="setTime"
-                         @mouseleave="goToTimeMouseLeave">
-                        <div class="progress"></div>
-                        <!--<div class="loadSongPr"></div>-->
-                    </div>
-
-                </div>
-
-            </div>
-        </transition>
-        <div class="playList__panel"
-             :class="{'toggled': togglePlayList}">
-            <div class="button-open-play-list"
-                 @click="[togglePlayList = !togglePlayList, runText()]">
-                <div class="button-open-play-list__right" :class="{'d-none': togglePlayList}">
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                </div>
-                <div class="button-open-play-list__left" :class="{'d-none': !togglePlayList}">
-                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-                </div>
-            </div>
+    <transition name="player-page">
+        <div class="player-page"
+             :class="{'togglePlayList': togglePlayListNewGrid}">
             <transition name="fade">
-                <div class="list" v-show="togglePlayList">
+                <loader v-show="isResult"></loader>
+            </transition>
+            <div class="player-page__top-panel">
+                <div class="block__right">
+                    <div class="user__name">
+                        {{$store.state.authUser[4]}} {{$store.state.authUser[5]}}
+                    </div>
+                    <div class="user__photo">
+                        <img :src="`${$store.state.authUser[6] ? $store.state.authUser[6] : 'default/user-icon-default.png'}`" alt="user-photo">
+                    </div>
+                    <div class="ml-4 open__player"
+                         @click="isShowPlayer = !isShowPlayer">
+                        <span>Открыть плеер</span>
+                        <i class="fa fa-music" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="block__right">
+                    <div class="log__out cursor-pointer" @click="logOut">
+                        <div class="log__out--icon mr-1"></div>
+                        <span>Выйти</span>
+                    </div>
+                </div>
+            </div>
+            <div class="player-page__toggle" v-show="!bg_fade_in"
+                 @click="[runText(),togglePlayList(), newGrid(), bgFadeIn()]"
+
+            >
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+            </div>
+            <transition name="toggle-playlist">
+                <div class="player-page__playlist list" v-show="!isTogglePlayList">
                     <b-button variant="outline-primary" class="playList__panel-button-load" v-b-modal.modal1>
                         <span>Загрузить музыку</span>
                         <i class="fa fa-cloud-download" aria-hidden="true"></i>
@@ -149,47 +60,142 @@
                             </div>
                         </div>
                     </template>
+                </div>
+            </transition>
+            <transition name="player--show">
+                <div class="player-page__player" v-show="isShowPlayer">
+                    <div class="block__visualizer">
+                        <div class="visualizer">
+                        </div>
+                    </div>
+                    <div class="nameSong">{{ songCurrentName }}</div>
+                    <div class="control">
+                        <div class="block-lef">
+                            <div class="repeat"
+                                 :class="{'click': songRepeat}"
+                                 @click="songRepeat = !songRepeat"
+                            >
+                                <i class="fa fa-repeat" aria-hidden="true"></i>
+                            </div>
+                            <div class="time">{{songCurrentTime}}</div>
+                        </div>
+                        <div class="block-cen">
+                            <div class="prev"
+                                 @click="prevTrack($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                            </div>
+                            <div class="play-pause"
+                                 :class="{'d-none': iconActiveMainPlay}"
+                                 @click="playTrack">
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                            </div>
+                            <div class="pause"
+                                 @click="playTrack"
+                                 :class="{'d-none': !iconActiveMainPlay}">
+                                <i class="fa fa-pause" aria-hidden="true"></i>
+                            </div>
+                            <div class="next"
+                                 @click="nextTrack($event)">
+                                <i class="fa fa-forward" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="block-rig">
+                            <div class="mute">
+                                <i class="fa fa-volume-up" aria-hidden="true"
+                                   :class="{'d-none':volumeValue === '0'}"></i>
+                                <i class="fa fa-volume-off d-none" aria-hidden="true"
+                                   :class="{'d-flex':volumeValue === '0'}"></i>
+                            </div>
+                            <!--<input type="range" class="volume" min="0" max="100" v-model="volumeValue">-->
+                            <vue-slider
+                                    v-model="volumeValue"
+                                    :min="0"
+                                    :max="100"
+                            >
+
+                            </vue-slider>
+                        </div>
+                    </div>
+                    <div class="timetobar">
+
+                        <div class="setTime"
+                             :class="{'d-flex': songMouseHoverTime,
+                     'd-none': !songMouseHoverTime}">
+                            {{ songMouseHoverTimeOut }}
+                        </div>
+                        <div class="range"
+                             @mouseenter="goToTimeMouseOverEnter"
+                             @mousemove="goToTime($event)"
+                             @click="setTime"
+                             @mouseleave="goToTimeMouseLeave">
+                            <div class="progress"></div>
+                            <!--<div class="loadSongPr"></div>-->
+                        </div>
+
+                    </div>
 
                 </div>
             </transition>
+            <div class="player-page__cover" :class="{'bg-fade-in': bg_fade_in}">
+                <div class="cover">
+                    <div class="cover__visualizer">
+                    </div>
+                    <div class="cover__buffer" >
+                        <img src="../../assets/logo.png" alt="Y0pta">
+                    </div>
+                </div>
+            </div>
+            <div class="player-page__stars">
+            <div id="stars1"></div>
+            <div id="stars2"></div>
+            <div id="stars3"></div>
+            </div>
+            <b-link class="download-cover" v-b-modal.modal2>
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </b-link>
+
+            <!--form-->
+            <b-modal id="modal1" title="BootstrapVue">
+                <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
+
+                    <input type="file" id="files" name="files" multiple="multiple"><br>
+                    <input type="email" id="email" name="email">
+
+
+                    <input type="button" value="Upload" @click="this.uploadFiles">
+
+                </form>
+            </b-modal>
+
+            <b-modal id="modal2" title="BootstrapVue">
+                <form id="uploadCover" name="uploadForm" enctype="multipart/form-data">
+                    <input type="file" id="filesImage" name="files" multiple="multiple"><br>
+                    <input type="button" value="Upload" @click="this.uploadFilesCover">
+                </form>
+            </b-modal>
         </div>
-
-        <!--form-->
-        <b-modal id="modal1" title="BootstrapVue">
-            <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
-
-                <input type="file" id="files" name="files" multiple="multiple"><br>
-                <input type="email" id="email" name="email">
-
-
-                <input type="button" value="Upload" @click="this.uploadFiles">
-
-            </form>
-        </b-modal>
-
-        <b-modal id="modal2" title="BootstrapVue">
-            <form id="uploadCover" name="uploadForm" enctype="multipart/form-data">
-                <input type="file" id="filesImage" name="files" multiple="multiple"><br>
-                <input type="button" value="Upload" @click="this.uploadFilesCover">
-            </form>
-        </b-modal>
-    </div>
+    </transition>
 </template>
 <script>
     import loader from '../module/loader'
     // import $ from 'jquery'
     import axios from 'axios'
     import playerMixin from '../../mixins'
+    import VueSlider from 'vue-slider-component'
+    import 'vue-slider-component/theme/antd.css'
 
     export default {
         data() {
             return {
+                isUploadProgress: '',
                 limit: 15,
                 paginationVal: 5,
                 playListMaxCount: '',
                 requestAnimationFrame: window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame,
                 img: new Image(),
-                togglePlayList: false,
+                isTogglePlayList: false,
+                togglePlayListNewGrid: false,
+                bg_fade_in: false,
                 songCurrentName: 'Song Name',
                 isShowPlayer: false,
                 backgroundArray: [],
@@ -219,11 +225,10 @@
                 ctx: '',
 
                 analyser: '',
-                arrayClassEv: '',
-                visualizerMinValue: '',
+                visualizerMinValue: 2,
                 array: [],
-                arrayClassEvFon: '',
                 source: '',
+                period: '300',
 
                 // mute: false,
                 // volume: 100,
@@ -244,6 +249,7 @@
         },
         components: {
             loader,
+            VueSlider,
         },
         mixins: [
             playerMixin,
@@ -262,23 +268,26 @@
 
             },
             runText() {
-                this.$nextTick(() => {
-                    let name = document.querySelector('.song-name');
-                    let span = document.querySelectorAll('.song-name__span');
-                    span.forEach((item) =>{
-                        let text = item.innerHTML;
-                        if (item.offsetWidth > name.offsetWidth ) {
-                            let f = () =>{
-                                text = text[text.length - 1] + text.substring(0, text.length - 1);
-                                item.innerHTML = text;
-                                setTimeout(() => {
-                                    requestAnimationFrame(f);
-                                }, 100);
-                            };
-                            f();
-                        }
-                    });
-                });
+                // this.$nextTick(() => {
+                //     // cancelAnimationFrame(f);
+                //     let name = document.querySelector('.song-name');
+                //     let span = document.querySelectorAll('.song-name__span');
+                //     span.forEach((item) =>{
+                //         let text = item.innerHTML;
+                //         if (item.offsetWidth > name.offsetWidth ) {
+                //             let f = () =>{
+                //                 console.log('log00');
+                //
+                //                 text = text[text.length - 1] + text.substring(0, text.length - 1);
+                //                 item.innerHTML = text;
+                //                 setTimeout(() => {
+                //                     requestAnimationFrame(f);
+                //                 }, 100);
+                //             };
+                //             f();
+                //         }
+                //     });
+                // });
             },
             trackDelete(e) {
                 this.result = '';
@@ -298,16 +307,22 @@
                 const data = new FormData(document.getElementById('uploadForm'));
                 const trackFiles = document.querySelector('#files');
                 data.append('user_id', this.$cookie.get('user_id'));
-                for (let i=0; i<trackFiles.files.length; i++) {
+                for (let i = 0; i < trackFiles.files.length; i++) {
                     data.append('file', trackFiles.files[i]);
 
                     await axios.post('/api/upload_music.php', data, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
+                        },
+                        onUploadProgress: (progressEvent) => {
+                            const { loaded, total } = progressEvent;
+                            this.isUploadProgress = (loaded * 100) / total;
+                            console.log(isUploadProgress);
                         }
                     })
                         .then(response => {
-                            this.$store.dispatch('selectPlaylist',this.$cookie.get('user_id'));
+                            this.limit = 15;
+                            this.$store.dispatch('selectPlaylist', {cookieID: this.$cookie.get('user_id'), limitValue: this.limit});
                         })
                         .catch(error => {
                             console.log(error.response)
@@ -346,8 +361,7 @@
 
             playSong(e) {
                 this.songPlay = true;
-                this.drawVisualizerInPlayer();
-                this.drawFon();
+                this.draw();
                 this.songCurrentName = e.currentTarget.querySelector('.song-name__span').innerHTML.replace(/\.[^/.]+$/, "");
                 this.iconActiveMainPlay = true;
                 this.removeActiveCurrentClass();
@@ -382,9 +396,7 @@
 
             playTrack() {
                 this.songPlay = true;
-                this.drawVisualizerInPlayer();
-                this.drawFon();
-                this.drawVisualizerInFon();
+                this.draw();
                 this.removeActiveCurrentClass();
                 this.iconActiveMainPlay = !this.iconActiveMainPlay;
                 if(this.srcId < 0) {
@@ -514,6 +526,7 @@
                     setTime.style.cssText = 'left:'+(mouseMoveLeft - 2.5)+'%';
                 }
             },
+
             goToTimeMouseOverEnter() {
                 if (this.song.src) {
                     this.songMouseHoverTime = true;
@@ -532,111 +545,87 @@
                 //this.analyser.type = "peaking";
                 // this.analyser.frequency.value = 2000;
                 this.analyser.fftSize = 1024;
-                //this.analyser.minDecibels = -70;
-                //this.analyser.maxDecibels = -30;
-                //this.analyser.smoothingTimeConstant = 0.85;
+                // this.analyser.minDecibels = -70;
+                // this.analyser.maxDecibels = -30;
+                this.analyser.minDecibels = -100;
+                this.analyser.maxDecibels = -30;
+                this.analyser.smoothingTimeConstant = 0.75;
                 this.source = this.audioCtx.createMediaElementSource(this.song);
                 this.source.connect(this.analyser);
                 this.analyser.connect(this.audioCtx.destination);
-
                 this.array = new Uint8Array(this.analyser.frequencyBinCount);
-                for (let i=0; i<this.array.length -10; i++){
+
+                //Создание блоков
+                for (let i=0; i<this.array.length -100; i++){
                     let block = document.querySelector('.visualizer');
                     let newBlock = document.createElement('div');
                     newBlock.classList.add('visualizer__item');
                     block.appendChild(newBlock);
                 }
-                this.arrayClassEv = document.querySelectorAll('.visualizer__item');
-                for (let i=0; i < this.array.length; i++) {
 
-                }
-                // console.log(this.analyser);
-                this.visualizerMinValue = 2;
-                //this.analyser.getFloatTimeDomainData()(this.array);
-
-                // fon
-
-                // this.arrayFon = new Uint8Array(360);
-                for (let i=0; i<this.array.length; i++){
+                for (let i=0; i<this.period; i++){
                     let block = document.querySelector('.cover__visualizer');
                     let newBlock = document.createElement('div');
                     newBlock.classList.add('cover__visualizer-item');
                     block.appendChild(newBlock);
                 }
-                this.arrayClassEvFon = document.querySelectorAll('.cover__visualizer-item');
             },
 
-            drawFon() {
-                const element = document.querySelector(".cover");
-                const buffer = document.querySelector(".buffer");
+            draw() {
+                this.analyser.getByteFrequencyData(this.array);
 
-                const width = window.innerWidth;
-                const height = window.innerHeight;
+                const cover = document.querySelector('.cover');
+                const buffer = document.querySelector('.cover__buffer');
+                const visualizer_item = document.querySelectorAll('.visualizer__item');
+                const cover_visualizer_item = document.querySelectorAll('.cover__visualizer-item');
+
+                //const width = "100%"; //window.innerWidth
+                //const height = "100%"; //window.innerHeight
                 const indexArray  = 0;
                 const reduce = 1.5;
-                this.analyser.getByteFrequencyData(this.array);
-                element.style.cssText = `
+                cover.style.cssText = `
                 background-image: url(${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'});
                 margin-left: ${-((this.array[indexArray]/reduce)*2)/2}px;
                 margin-top: ${-((this.array[indexArray]/reduce)*2)/2}px;
-                width: ${width + ((this.array[indexArray]/reduce)*2)}px;
-                height: ${height+(((this.array[indexArray]/reduce)*2))}px;
+                width: calc(100% + ${((this.array[indexArray]/reduce)*2)}px);
+                height: calc(100% + ${(((this.array[indexArray]/reduce)*2))}px);
                 `;
 
-                buffer.style.cssText = `width: ${this.widthBuffer + this.array[1]/4}px;  height: ${this.heightBuffer + this.array[1]/4}px;`;
+                //buffer.style.cssText = `width: ${this.widthBuffer + this.array[1]/4}px;  height: ${this.heightBuffer + this.array[1]/4}px;`;
 
-                if(this.songPlay) {
-                    requestAnimationFrame(this.drawFon);
-                }
-            },
-
-            drawVisualizerInFon() {
-                // getByteTimeDomainData
-                this.analyser.getByteFrequencyData(this.array);
-                let period = 360 / this.analyser.frequencyBinCount;
-                let t=period;
-                for (let i = 0; i < this.array.length; i++) {
-                    //let array = this.arrayFon[i] - ((this.arrayFon[i] * 20) / 100);
-                    // this.arrayClassEvFon[i].style.cssText = `transform: rotate(${t}deg) translateY(${-this.array[i]/2}px)`;
-                    if (i<=360) {
-                        this.arrayClassEvFon[i].style.cssText = `transform: rotate(${i}deg) translateY(100px); height: ${this.array[i]}px`;
-                    }
-                    else {
-                        this.arrayClassEvFon[i].style.cssText = `display: none`;
-                    }
+                // visualizer in fon
+                let period = 360 / this.period;
+                let t = period;
+                for (let i = 0; i < this.period; i++) {
+                    cover_visualizer_item[i].style.cssText = `transform: rotate(${t}deg) translateY(100px); height: ${this.array[i]}px`;
                     t=t+period;
                 }
-                if(this.songPlay) {
-                    requestAnimationFrame(this.drawVisualizerInFon);
-                }
-            },
 
-            drawVisualizerInPlayer() {
-                this.analyser.getByteFrequencyData(this.array);
-                for (let i=0; i < this.array.length - 10; i++) {
+                // visualizer in player
+                for (let i = 0; i < this.array.length - 100; i++) {
                     if (this.array[i] < this.visualizerMinValue) {
-                        this.arrayClassEv[i].style.cssText = 'height:'+this.visualizerMinValue+'px';
+                        visualizer_item[i].style.cssText = 'height:'+this.visualizerMinValue+'px';
                     }
 
                     else {
-                        let array = this.array[i] - ((this.array[i]*20)/100);
-                        this.arrayClassEv[i].style.cssText = 'height:'+array+'px';
+                        //let array = this.array[i] - ((this.array[i]*20)/100);
+                        let array = this.array[i]/2;
+                        visualizer_item[i].style.cssText = 'height:'+array+'px';
                     }
 
                 }
 
-                if(this.songPlay) {
-                    requestAnimationFrame(this.drawVisualizerInPlayer);
-                }
 
+                if(this.songPlay) {
+                    requestAnimationFrame(this.draw);
+                }
             },
+
             scrollPlayList() {
                 const element = document.querySelector('.list');
                 element.onscroll = () => {
                     let tmp = element.scrollHeight - element.scrollTop;
-                    // console.log(Math.round(tmp),'tmp');
-                    // console.log(element.clientHeight + 100,'d');
-                    if (Math.round(tmp) === element.clientHeight && this.limit < this.playListMaxCount) {
+                    if (this.limit < this.playListMaxCount && Math.round(tmp) === element.clientHeight || Math.round(tmp) - 1 === element.clientHeight  || Math.round(tmp) + 1 === element.clientHeight) {
                         this.$store.dispatch('selectPlaylist', {cookieID: this.$cookie.get('user_id'), limitValue: this.limit+=this.paginationVal});
                         this.runText();
                     }
@@ -645,6 +634,28 @@
                         this.lengthAllTracks = this.playListMaxCount;
                     }
                 }
+            },
+
+            newGrid() {
+                setTimeout(() =>{
+                    this.togglePlayListNewGrid= !this.togglePlayListNewGrid;
+                }, 1000)
+            },
+            togglePlayList() {
+                if(this.isTogglePlayList === false) {
+                    this.isTogglePlayList = true;
+                }
+                else {
+                    setTimeout(() =>{
+                        this.isTogglePlayList = false;
+                    }, 1000)
+                }
+            },
+            bgFadeIn() {
+                this.bg_fade_in = true;
+                setTimeout(() =>{
+                    this.bg_fade_in = false;
+                }, 2000)
             },
         },
         beforeCreate() {
@@ -658,25 +669,19 @@
             this.$store.dispatch('selectPic',this.$cookie.get('user_id'));
         },
         mounted() {
-            const buffer = document.querySelector(".buffer");
+            const buffer = document.querySelector(".cover__buffer");
             this.widthBuffer = buffer.clientWidth;
             this.heightBuffer = buffer.clientHeight;
 
             this.scrollPlayList();
-
-            const s = this;
             this.visuallizer();
+
             this.img.src = `${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'}`;
             this.backgroundArray[0] = 0;
-            this.img.onload = function () {
-                s.drawFon();
-            };
 
-            window.onresize = function() {
-                s.drawFon();
+            this.img.onload = () => {
+                this.draw();
             };
-            this.drawVisualizerInFon();
-            this.drawVisualizerInPlayer();
 
         },
 

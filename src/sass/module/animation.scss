@@ -1,15 +1,42 @@
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.toggle-playlist-enter-active, .toggle-playlist-leave-active {
+  transition: 1s ease-in-out;
+  left: 0;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-  opacity: 0;
+.toggle-playlist-enter, .toggle-playlist-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  left: -100%;
 }
 
-.top-enter-active, .top-leave-active {
+.player--show-enter-active, .player--show-leave-active {
   transition: all 1s ease-in-out;
   top: 35px;
 }
-.top-enter, .top-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+.player--show-enter, .player--show-leave-to /* .fade-leave-active до версии 2.1.8 */ {
   transition: all 1s ease-in-out;
   top: -100%;
+}
+
+
+@keyFrames buffer-items-rotate{
+  from {
+    transform: translate(-50%, -50%) rotate(-0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes bg-fade-in {
+  from {
+    left: 0;
+    //opacity: 1;
+  }
+  50% {
+    left: 100%;
+    //opacity: 0;
+  }
+
+  to {
+    left: 0;
+    opacity: 1;
+  }
 }
