@@ -158,12 +158,13 @@
             <b-modal id="modal1" title="BootstrapVue">
                 <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
 
-                    <input type="file" id="files" name="files" multiple="multiple"><br>
-                    <input type="email" id="email" name="email">
+                    <input type="file" id="files" name="file" multiple="multiple"><br>
+                    <!--<input type="email" id="email" name="email">-->
 
 
                     <input type="button" value="Upload" @click="this.uploadFiles">
-
+                    <!--<input type="submit">-->
+                    {{isUploadProgress}}
                 </form>
             </b-modal>
 
@@ -187,6 +188,7 @@
     export default {
         data() {
             return {
+                cover: '',
                 isUploadProgress: '',
                 limit: 15,
                 paginationVal: 5,
@@ -205,8 +207,8 @@
                 iconActiveMainPlay: false,
                 renderPage: false,
 
-                song: new Audio(),
-                audioCtx: new(window.AudioContext || window.webkitAudioContext)(),
+                song: '',
+                audioCtx: '',
                 srcPlay: '',
                 clickSrc: '',
                 srcId: -1,
@@ -312,12 +314,13 @@
 
                     await axios.post('/api/upload_music.php', data, {
                         headers: {
-                            'Content-Type': 'multipart/form-data'
+                            'Content-Type': 'multipart/form-data',
                         },
+
                         onUploadProgress: (progressEvent) => {
                             const { loaded, total } = progressEvent;
                             this.isUploadProgress = (loaded * 100) / total;
-                            console.log(isUploadProgress);
+                            console.log(this.isUploadProgress);
                         }
                     })
                         .then(response => {
@@ -360,6 +363,9 @@
 
 
             playSong(e) {
+                if (this.audioCtx === '') {
+                    this.visuallizer();
+                }
                 this.songPlay = true;
                 this.draw();
                 this.songCurrentName = e.currentTarget.querySelector('.song-name__span').innerHTML.replace(/\.[^/.]+$/, "");
@@ -541,6 +547,10 @@
             },
 
             visuallizer() {
+                this.song = new Audio();
+                //this.song.crossOrigin = 'anonymous';
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                this.audioCtx = new AudioContext();
                 this.analyser = this.audioCtx.createAnalyser();
                 //this.analyser.type = "peaking";
                 // this.analyser.frequency.value = 2000;
@@ -584,7 +594,7 @@
                 const indexArray  = 0;
                 const reduce = 1.5;
                 cover.style.cssText = `
-                background-image: url(${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'});
+                background-image: url(${this.cover});
                 margin-left: ${-((this.array[indexArray]/reduce)*2)/2}px;
                 margin-top: ${-((this.array[indexArray]/reduce)*2)/2}px;
                 width: calc(100% + ${((this.array[indexArray]/reduce)*2)}px);
@@ -669,19 +679,18 @@
             this.$store.dispatch('selectPic',this.$cookie.get('user_id'));
         },
         mounted() {
+            this.cover = this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg';
             const buffer = document.querySelector(".cover__buffer");
             this.widthBuffer = buffer.clientWidth;
             this.heightBuffer = buffer.clientHeight;
 
             this.scrollPlayList();
-            this.visuallizer();
 
-            this.img.src = `${this.$store.state.randomCover ? this.$store.state.randomCover.images: 'default/cover-default.jpg'}`;
+            // window.onload = () => {
+            //     this.visuallizer();
+            //     this.draw();
+            // };
             this.backgroundArray[0] = 0;
-
-            this.img.onload = () => {
-                this.draw();
-            };
 
         },
 
@@ -710,39 +719,43 @@
             },
 
             isVolume() {
-                this.song.volume = this.volumeValue/100;
+                if(this.song) {
+                    this.song.volume = this.volumeValue/100;
+                }
             },
 
             currentTimeOut() {
-                const s = this;
-                this.song.ontimeupdate = function () {
-                    let currentTime = s.song.currentTime;
-                    let duration = s.song.duration;
-                    let current =((duration+currentTime)*100)/duration;
-                    let timesec = parseInt(currentTime%60);
-                    let peremena;
-                    if (timesec < 10){
-                        peremena = "0";
-                    }
-                    else{
-                        peremena = "";
-                    }
+                if(this.song) {
+                    const s = this;
+                    this.song.ontimeupdate = function () {
+                        let currentTime = s.song.currentTime;
+                        let duration = s.song.duration;
+                        let current =((duration+currentTime)*100)/duration;
+                        let timesec = parseInt(currentTime%60);
+                        let peremena;
+                        if (timesec < 10){
+                            peremena = "0";
+                        }
+                        else{
+                            peremena = "";
+                        }
 
-                    s.songCurrentTime = parseInt(currentTime/60)+':'+peremena+parseInt(currentTime%60);
-                    if (s.songRepeat === true) {
-                        if(duration === currentTime){
-                            s.song.currentTime = 0;
-                            s.song.play();
+                        s.songCurrentTime = parseInt(currentTime/60)+':'+peremena+parseInt(currentTime%60);
+                        if (s.songRepeat === true) {
+                            if(duration === currentTime){
+                                s.song.currentTime = 0;
+                                s.song.play();
+                            }
                         }
-                    }
-                    else {
-                        if(duration === currentTime){
-                            s.nextTrack();
+                        else {
+                            if(duration === currentTime){
+                                s.nextTrack();
+                            }
                         }
-                    }
-                    if (s.songMouseHoverTime !== true) {
-                        const element = s.$el.querySelector(".progress");
-                        element.style.cssText = 'width:'+(current - 100)+'%';
+                        if (s.songMouseHoverTime !== true) {
+                            const element = s.$el.querySelector(".progress");
+                            element.style.cssText = 'width:'+(current - 100)+'%';
+                        }
                     }
                 }
             },

@@ -1,13 +1,14 @@
 <?php
+mb_internal_encoding("UTF-8");
 $database = "my";
 $user = "root";
 $password = "";
 $server = "localhost";
 
-//$database = "y0pta";
-//$user = "y0pta";
-//$password = "qwe123";
-//$server = "db2.ho.ua";
+//$database = "id9507157_yopta";
+//$user = "id9507157_yopta";
+//$password = "yopta";
+//$server = "localhost";
 $start_time = microtime(true);
 //$connect = mysqli_connect($server, $user, $password);
 $time_end = microtime(true) - $start_time;

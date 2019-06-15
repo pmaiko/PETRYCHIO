@@ -10,7 +10,7 @@ if(isset($files)){
 	$errors = array();
 	$file_name = $files['name'];
 	$file_tmp = $files['tmp_name'];
-    move_uploaded_file($file_tmp,SITE_ROOT.'./music/'.$file_name);
+    move_uploaded_file($file_tmp,SITE_ROOT.'/music/'.$file_name);
 }
 
 $insert_query= "INSERT INTO tracks (Song, Name, id_user) VALUES ('$uploads_dir/$file_name','$file_name','$id_user')";
