@@ -1,0 +1,238 @@
+$text-color: #fff;
+
+.background {
+  &-gradient {
+    background: linear-gradient(to bottom, #401b7a, #8a215a);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    min-height: 700px;
+
+  }
+
+  &-image {
+    background: url("../assets/images/header3-old.jpg");
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    min-height: 700px;
+    position: absolute;
+    opacity: .1;
+  }
+}
+
+section.music {
+  position: relative;
+  color: $text-color;
+  font-size: 1.2vmax;
+
+  .header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 7.5em;
+    height: 5.5em;
+    align-items: center;
+
+    .site-logo {
+      flex-basis: 10em;
+    }
+
+    &-link {
+      a {
+        color: $text-color;
+      }
+    }
+    &-search {
+      flex-basis: 22em;
+      &__input {
+        border: none;
+        height: 3em;
+        padding: 0 2em;
+        width: 100%;
+        border-radius: 2em;
+        background: transparent;
+        box-shadow: 0 12px 20px 6px rgba(0,0,0, .3);
+      }
+    }
+
+    .user-block {
+      &__photo{
+        display: inline-block;
+
+        img {
+          width: 2.5em;
+          border-radius: 100%;
+        }
+      }
+
+      &__email{
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .left-panel {
+    height: 100vh;
+    position: fixed;
+    background: #8a215a;
+    top: 0;
+    z-index: 999;
+
+    .playlist {
+      width: 35em;
+
+      &__item {
+        display: flex;
+        align-items: center;
+        padding: .3em 0;
+
+        &.active {
+          color: rgb(251, 45, 145);
+        }
+      }
+    }
+
+    &__button_show_hide {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -3em;
+      width: 2.7em;
+      height: 2.7em;
+      transition: all 1s ease-out;
+      border: 1px solid;
+      border-radius: 100%;
+      animation: changeBackShadow 2s ease-in-out infinite alternate;
+    }
+
+    &__button_arrow {
+      position: absolute;
+      background: url("../assets/icons/right-arrow.svg") left center no-repeat / contain;
+      width: 1.7em;
+      height: 1.7em;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .player {
+    padding: 0 7.5em;
+    &__track-info {
+      padding: 4em 0;
+    }
+
+    &__track-current-time {
+      font-size: .8em;
+      opacity: .8;
+      margin-bottom: -1em;
+    }
+
+    &__track-performer {
+      font-size: 5em;
+      font-weight: 700;
+    }
+
+    &__track-full-name {
+      font-size: 1.5em;
+
+      span {
+        text-transform: uppercase;
+      }
+    }
+
+    &__progress-bar {
+      display: flex;
+      position: relative;
+      height: 7em;
+
+      .moveTime {
+        position: absolute;
+        margin-left: .2em;
+        bottom: 0;
+      }
+    }
+
+    &__control-panel {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2em;
+
+      &_left-block {
+        display: flex;
+        align-items: center;
+
+        .play-pause-track {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 2px solid #fff;
+          width: 4em;
+          height: 4em;
+          border-radius: 100%;
+
+          .icons {
+            &--play-track {
+            }
+          }
+        }
+      }
+
+      &_track-info {
+        margin-left: 1em;
+        font-size: .8em;
+      }
+
+      &_track-performer {
+        span {
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+      }
+
+      &_right-block {
+        display: flex;
+        align-items: center;
+
+        .btn-circle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #fff;
+          width: 2.5em;
+          height: 2.5em;
+          border-radius: 100%;
+          margin: 0 .5em;
+        }
+      }
+    }
+
+  }
+}
+
+.icons {
+  width: 1em;
+  height: 1em;
+
+  &--play-track {
+    background: url("../assets/icons/play-button.svg") center center no-repeat / contain;
+    margin-left: .2em;
+
+  }
+  &--pause-track {
+    background: url("../assets/icons/pause.svg") center center no-repeat / contain;
+  }
+
+  &--prev-track {
+    background: url("../assets/icons/next.svg") center center no-repeat / contain;
+    transform: rotate(180deg);
+    margin-left: -.2em;
+  }
+
+  &--next-track {
+    background: url("../assets/icons/next.svg") center center no-repeat / contain;
+    margin-left: .2em;
+  }
+}

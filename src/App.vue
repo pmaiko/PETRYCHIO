@@ -1,14 +1,8 @@
 <template>
   <div id="app">
-    <!--<link rel="stylesheet"-->
-          <!--href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"-->
-          <!--integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"-->
-          <!--crossorigin="anonymous">-->
     <transition name="slide-fade" mode="out-in">
       <router-view></router-view>
     </transition>
-    <!--{{this.$cookie.set('test', 'Hello world!', 1)-->
-    <!--this.$cookie.get('test')}}-->
   </div>
 </template>
 

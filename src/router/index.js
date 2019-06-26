@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import main from '../components/pages/main'
-import login from '../components/pages/login'
+import SignIn from '../components/pages/SignIn'
 import registration from '../components/pages/registration'
 import NotFoundComponent from '../components/pages/NotFoundComponent'
-import music from '../components/pages/music'
+import Music from '../components/pages/Music'
 Vue.use(VueRouter);
 
 const routes =[
@@ -14,9 +14,9 @@ const routes =[
       component: main
     },
     {
-        path: '/login',
-        name: 'login',
-        component: login
+        path: '/sign-in',
+        name: 'SignIn',
+        component: SignIn
     },
     {
         path: '/registration',
@@ -25,8 +25,8 @@ const routes =[
     },
     {
         path: '/music',
-        name: 'music',
-        component: music
+        name: 'Music',
+        component: Music
     },
 
     {
